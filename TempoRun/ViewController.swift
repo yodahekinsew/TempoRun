@@ -83,44 +83,56 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
             boseCharacteristics = characteristics
             for characteristic in characteristics {
                 print(characteristic.uuid)
-                if characteristic.uuid == BoseFramesPeripheral.sensorConfigurationUUID {
-                    peripheral.readValue(for: characteristic)
-                    print("Sensor Configuration characteristic found")
-                } else if characteristic.uuid == BoseFramesPeripheral.sensorInformationUUID {                    peripheral.readValue(for: characteristic)
-                    print("Sensor Information characteristic found")
-                } else if characteristic.uuid == BoseFramesPeripheral.sensorDataUUID {                    peripheral.readValue(for: characteristic)
-                    print("Setting sensor data as notifier")
+                peripheral.readValue(for: characteristic)
+                switch (characteristic.uuid) {
+                case BoseFramesPeripheral.sensorConfigurationUUID:
+                    print("Found Sensor Configuration Characteristic")
+                case BoseFramesPeripheral.sensorInformationUUID:
+                    print("Found Sensor Information Characteristic")
+                case BoseFramesPeripheral.sensorDataUUID:
+                    print("Found Sensor Data Characteristic")
                     peripheral.setNotifyValue(true, for: characteristic)
-                    print("Sensor Data characteristic found");
+                case BoseFramesPeripheral.gestureConfigurationUUID:
+                    print("Found Gesture Configuration Characteristic")
+                case BoseFramesPeripheral.gestureInformationUUID:
+                    print("Found Gesture Information Characteristic")
+                case BoseFramesPeripheral.gestureDataUUID:
+                    print("Found Gesture Data Characteristic")
+                    peripheral.setNotifyValue(true, for: characteristic)
+                default:
+                    print("Found Unsupported Characteristic")
                 }
             }
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        printCharacteristic(using: characteristic)
-        if characteristic.uuid == BoseFramesPeripheral.sensorDataUUID {
-            BoseFramesPeripheral().parseSensorData(using: characteristic)
-        }
-        if characteristic.uuid == BoseFramesPeripheral.sensorConfigurationUUID {
-            var newData = BoseFramesPeripheral().parseSensorConfiguration(using: characteristic)
-            newData[2] = 20
-            print("writing value")
-            peripheral.writeValue(newData, for: characteristic, type: .withResponse)
-        }
-        if characteristic.uuid == BoseFramesPeripheral.sensorInformationUUID {
-            BoseFramesPeripheral().parseSensorInformation(using: characteristic)
+//        printCharacteristic(using: characteristic)
+        switch(characteristic.uuid) {
+        case BoseFramesPeripheral.sensorDataUUID:
+            var data = BoseFramesPeripheral().parseSensorData(using: characteristic)
+        case BoseFramesPeripheral.sensorInformationUUID:
+            var data = BoseFramesPeripheral().parseSensorInformation(using: characteristic)
+        case BoseFramesPeripheral.sensorConfigurationUUID:
+            var data = BoseFramesPeripheral().parseSensorConfiguration(using: characteristic)
+            data[2] = 20 //Turn on Accelerometer Data with a Sampling Rate of 20ms
+//            data[5] = 20 //Turn on Gyroscope Data
+//            data[8] = 20 //Turn on Rotation Data
+//            data[11] = 20 //Turn on Game Rotation Data
+            peripheral.writeValue(data, for: characteristic, type: .withResponse)
+        case BoseFramesPeripheral.gestureDataUUID:
+            var data = BoseFramesPeripheral().parseGestureData(using: characteristic)
+        case BoseFramesPeripheral.gestureInformationUUID:
+            var data = BoseFramesPeripheral().parseGestureInformation(using: characteristic)
+        case BoseFramesPeripheral.gestureConfigurationUUID:
+            var data = BoseFramesPeripheral().parseGestureConfiguration(using: characteristic)
+        default:
+            print("Cannot Parse Unsupported Characteristic")
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-//        guard let data = characteristic.value else { return }
-//        print("\nValue: \(data.toHexEncodedString()) \nwas written to Characteristic:\n\(characteristic)")
-//        if(error != nil){
-//            print("\nError while writing on Characteristic:\n\(characteristic). Error Message:")
-//            print(error as Any)
-//        }
-        print("Successfully wrote a value")
+        print("Successfully wrote a value for \(characteristic.uuid)")
     }
     
     func printCharacteristic(using characteristic: CBCharacteristic) {
@@ -129,8 +141,7 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
         print("Characteristic properties: \(characteristic.properties)")
         print("Characteristic descriptors: \(characteristic.descriptors)")
         if let value = characteristic.value {
-            print("Characteristic value: \(value)")
-            print(value.count)
+            print("Characteristic value: \(value) \(value.count)")
         }
     }
     
