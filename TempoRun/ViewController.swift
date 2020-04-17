@@ -8,11 +8,15 @@
 
 import UIKit
 import CoreBluetooth
+    
 
 class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDelegate {
     // Properties
     private var centralManager: CBCentralManager!
     private var peripheral: CBPeripheral!
+    private var boseCharacteristics: [CBCharacteristic]?
+    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +67,7 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
             for service in services {
                 print(service.uuid)
                 if service.uuid == BoseFramesPeripheral.boseServiceUUID {
-                    print("LED service found")
+                    print("Bose AR service found")
                     //Now kick off discovery of characteristics
                     peripheral.discoverCharacteristics([BoseFramesPeripheral.sensorConfigurationUUID, BoseFramesPeripheral.sensorInformationUUID, BoseFramesPeripheral.sensorDataUUID], for: service)
                     return
@@ -76,18 +80,60 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         print("Discovered a characteristic")
         if let characteristics = service.characteristics {
+            boseCharacteristics = characteristics
             for characteristic in characteristics {
                 print(characteristic.uuid)
                 if characteristic.uuid == BoseFramesPeripheral.sensorConfigurationUUID {
+                    peripheral.readValue(for: characteristic)
                     print("Sensor Configuration characteristic found")
-                } else if characteristic.uuid == BoseFramesPeripheral.sensorInformationUUID {
+                } else if characteristic.uuid == BoseFramesPeripheral.sensorInformationUUID {                    peripheral.readValue(for: characteristic)
                     print("Sensor Information characteristic found")
-                } else if characteristic.uuid == BoseFramesPeripheral.sensorDataUUID {
+                } else if characteristic.uuid == BoseFramesPeripheral.sensorDataUUID {                    peripheral.readValue(for: characteristic)
+                    print("Setting sensor data as notifier")
+                    peripheral.setNotifyValue(true, for: characteristic)
                     print("Sensor Data characteristic found");
                 }
             }
         }
     }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        printCharacteristic(using: characteristic)
+        if characteristic.uuid == BoseFramesPeripheral.sensorDataUUID {
+            BoseFramesPeripheral().parseSensorData(using: characteristic)
+        }
+        if characteristic.uuid == BoseFramesPeripheral.sensorConfigurationUUID {
+            var newData = BoseFramesPeripheral().parseSensorConfiguration(using: characteristic)
+            newData[2] = 20
+            print("writing value")
+            peripheral.writeValue(newData, for: characteristic, type: .withResponse)
+        }
+        if characteristic.uuid == BoseFramesPeripheral.sensorInformationUUID {
+            BoseFramesPeripheral().parseSensorInformation(using: characteristic)
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+//        guard let data = characteristic.value else { return }
+//        print("\nValue: \(data.toHexEncodedString()) \nwas written to Characteristic:\n\(characteristic)")
+//        if(error != nil){
+//            print("\nError while writing on Characteristic:\n\(characteristic). Error Message:")
+//            print(error as Any)
+//        }
+        print("Successfully wrote a value")
+    }
+    
+    func printCharacteristic(using characteristic: CBCharacteristic) {
+        print("Characteristic UUID: \(characteristic.uuid)")
+        print("Characteristic isNotifying: \(characteristic.isNotifying)")
+        print("Characteristic properties: \(characteristic.properties)")
+        print("Characteristic descriptors: \(characteristic.descriptors)")
+        if let value = characteristic.value {
+            print("Characteristic value: \(value)")
+            print(value.count)
+        }
+    }
+    
     
 }
 

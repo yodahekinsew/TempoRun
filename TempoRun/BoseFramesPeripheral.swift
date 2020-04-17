@@ -24,4 +24,138 @@ class BoseFramesPeripheral: NSObject {
     public static let gestureInformationUUID = CBUUID.init(string: "a0384f52-f95a-4bcd-b898-7b9ceec92dad")
     public static let gestureConfigurationUUID = CBUUID.init(string: "21e550af-f780-477b-9334-1f983296f1d7")
     public static let gestureDataUUID = CBUUID.init(string: "9014dd4e-79ba-4802-a275-894d3b85ac74")
+    
+    private var sensors = [
+        "accelerometer",
+        "gyroscope",
+        "rotation",
+        "gameRotation",
+        "orientation",
+        "magnetometer",
+        "uncalibratedMagnetometer",
+    ]
+    private var gestures = [
+        "singleTap",
+        "doubleTap",
+        "headNod",
+        "headShake",
+    ]
+    private var sensorOffset = 0
+    private var gestureOffset = 128
+    private var possibleSamplePeriods = [
+        320,
+        160,
+        80,
+        40,
+        20
+    ]
+    
+    func getSensor(using sensorID: UInt) -> String {
+        return sensors[Int(sensorID)]
+    }
+    
+    
+    func parseSensorInformation(using sensorInformationCharacteristic: CBCharacteristic) -> Data {
+        print("---- Sensor Information ----")
+        let length = 12
+        var offset = 0
+        if let value = sensorInformationCharacteristic.value {
+            while(offset + length <= value.count) {
+                let sensorID = UInt8(value[offset])
+                let minScaled = UInt16(value[offset+1]) << 8 | UInt16(value[offset+2])
+                let maxScaled = UInt16(value[offset+3]) << 8 | UInt16(value[offset+4])
+                let minRaw = UInt16(value[offset+5]) << 8 | UInt16(value[offset+6])
+                let maxRaw = UInt16(value[offset+7]) << 8 | UInt16(value[offset+8])
+                let samplePeriodBitmask = UInt16(value[offset+9]) << 8 | UInt16(value[offset+10])
+                let sampleLength = UInt8(value[offset+11])
+                print("Sensor Information Entry: \(sensorID) \(minScaled) \(maxScaled) \(minRaw) \(maxRaw) \(samplePeriodBitmask) \(sampleLength)")
+                offset += length
+            }
+            return value
+        }
+        return Data()
+    }
+    
+    func parseSensorConfiguration(using sensorConfigurationCharacteristic: CBCharacteristic) -> Data {
+        print("---- Sensor Configuration ----")
+        let length = 3
+        var offset = 0
+        if let value = sensorConfigurationCharacteristic.value {
+            while(offset + length <= value.count) {
+                let sensorID = UInt8(value[offset])
+                let samplePeriod = UInt16(value[offset+1]) << 8 | UInt16(value[offset+2])
+                print("Sensor Configuration Entry: \(sensorID) \(samplePeriod)")
+                offset += length
+            }
+            return value
+        }
+        return Data()
+    }
+    
+    func parseSensorData(using sensorDataCharacteristic: CBCharacteristic) -> Int {
+        print("---- Sensor Data ----")
+        let headerLength = 3
+        var offset = 0
+        if let value = sensorDataCharacteristic.value {
+            while (offset < value.count) {
+                let sensorID = UInt8(value[offset])
+                let timestamp = UInt16(value[offset+1]) << 8 | UInt16(value[offset+2])
+                offset += headerLength
+                switch(sensorID) {
+                case 0:
+                    print("Acceleration Data")
+                    let x = UInt16(value[offset]) << 8 | UInt16(value[offset+1])
+                    let y = UInt16(value[offset+2]) << 8 | UInt16(value[offset+3])
+                    let z = UInt16(value[offset+4]) << 8 | UInt16(value[offset+5])
+                    let accuracy = UInt8(value[offset+6])
+                    offset += 7
+                    print("Sensor Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(accuracy)")
+                case 1:
+                    print("Gyroscope Data")
+                    let x = UInt16(value[offset]) << 8 | UInt16(value[offset+1])
+                    let y = UInt16(value[offset+2]) << 8 | UInt16(value[offset+3])
+                    let z = UInt16(value[offset+4]) << 8 | UInt16(value[offset+5])
+                    let accuracy = UInt8(value[offset+6])
+                    offset += 7
+                    print("Sensor Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(accuracy)")
+                case 2:
+                    print("Rotation Data")
+                    let x = UInt16(value[offset]) << 8 | UInt16(value[offset+1])
+                    let y = UInt16(value[offset+2]) << 8 | UInt16(value[offset+3])
+                    let z = UInt16(value[offset+4]) << 8 | UInt16(value[offset+5])
+                    let w = UInt16(value[offset+6]) << 8 | UInt16(value[offset+7])
+                    let accuracy = UInt16(value[offset+8]) << 8 | UInt16(value[offset+9])
+                    offset += 10
+                    print("Sensor Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(w) \(accuracy)")
+                case 3:
+                    print("Game Rotation Data")
+                    let x = UInt16(value[offset]) << 8 | UInt16(value[offset+1])
+                    let y = UInt16(value[offset+2]) << 8 | UInt16(value[offset+3])
+                    let z = UInt16(value[offset+4]) << 8 | UInt16(value[offset+5])
+                    let w = UInt16(value[offset+6]) << 8 | UInt16(value[offset+7])
+                    offset += 8
+                    print("Sensor Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(w)")
+                default:
+                    print("Unsupported sensor")
+                }
+            }
+        }
+        return 0
+    }
+    
+    func getAccelerometerData(using accelerometerData: [UInt8], offset dataOffset: Int) -> Void {
+    }
+    
+    func getGyroscopeData(using gyroscopeData: [UInt8], offset dataOffset: Int) -> Void {
+        
+    }
+    
+    func getRotationData(using rotationData: [UInt8], offset dataOffset: Int) -> Void {
+        
+    }
+    
+    func getGameRotationData(using gameRotationData: [UInt8], offset dataOffset: Int) -> Void {
+        
+    }
+    
 }
