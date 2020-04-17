@@ -49,6 +49,12 @@ class BoseFramesPeripheral: NSObject {
         40,
         20
     ]
+    private var accuracies = [
+        "unreliable",
+        "low",
+        "medium",
+        "high"
+    ]
     
     func getSensor(using sensorID: UInt) -> String {
         return sensors[Int(sensorID)]
@@ -103,13 +109,13 @@ class BoseFramesPeripheral: NSObject {
                 offset += headerLength
                 switch(sensorID) {
                 case 0:
-                    let denominator = Int16(pow(2.0, 12.0)) //Divide by denominator to get value in terms of "gs"
+                    let denominator = pow(2.0, 12.0) //Divide by denominator to get value in terms of "gs"
                     let x = Int16(value[offset]) << 8 | Int16(value[offset+1])
                     let y = Int16(value[offset+2]) << 8 | Int16(value[offset+3])
                     let z = Int16(value[offset+4]) << 8 | Int16(value[offset+5])
                     let accuracy = UInt8(value[offset+6])
                     offset += 7
-                    print("Accelerometer Data: timestamp - \(timestamp), x - \(x), y - \(y), z - \(z), accuracy - \(accuracy)")
+                    print("Accelerometer Data: x - \(Double(x)/denominator), y - \(Double(y)/denominator), z - \(Double(z)/denominator)")
                 case 1:
                     let x = UInt16(value[offset]) << 8 | UInt16(value[offset+1])
                     let y = UInt16(value[offset+2]) << 8 | UInt16(value[offset+3])

@@ -15,8 +15,33 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     private var centralManager: CBCentralManager!
     private var peripheral: CBPeripheral!
     private var boseCharacteristics: [CBCharacteristic]?
+    private var sensorDataCharacteristic: CBCharacteristic?
+    private var sensorInformationCharacteristic: CBCharacteristic?
+    private var sensorConfigurationCharacteristic: CBCharacteristic?
+    private var bosePeripheral = BoseFramesPeripheral()
     
-
+    
+    @IBOutlet weak var accelerometerToggle: UIButton!
+    private var accelerometerEnabled = false
+    @IBAction func toggleAccelerometer(_ sender: Any) {
+        var dataToWrite = Data(count: 12)
+        if accelerometerEnabled {
+            accelerometerEnabled = false
+            accelerometerToggle.setTitle("Enable Accelerometer", for: .normal)
+            dataToWrite[2] = 0
+        } else {
+            accelerometerEnabled = true
+            accelerometerToggle.setTitle("Disable Accelerometer", for: .normal)
+            dataToWrite[2] = 20
+        }
+        dataToWrite[3] = 1
+        dataToWrite[6] = 2
+        dataToWrite[9] = 3
+        if let characteristic = sensorConfigurationCharacteristic {
+            peripheral.writeValue(dataToWrite, for: characteristic, type: .withResponse)
+        }
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,10 +111,14 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
                 peripheral.readValue(for: characteristic)
                 switch (characteristic.uuid) {
                 case BoseFramesPeripheral.sensorConfigurationUUID:
+                    sensorConfigurationCharacteristic = characteristic
+                    accelerometerToggle.isHidden = false
                     print("Found Sensor Configuration Characteristic")
                 case BoseFramesPeripheral.sensorInformationUUID:
+                    sensorInformationCharacteristic = characteristic
                     print("Found Sensor Information Characteristic")
                 case BoseFramesPeripheral.sensorDataUUID:
+                    sensorDataCharacteristic = characteristic
                     print("Found Sensor Data Characteristic")
                     peripheral.setNotifyValue(true, for: characteristic)
                 case BoseFramesPeripheral.gestureConfigurationUUID:
@@ -110,22 +139,22 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
 //        printCharacteristic(using: characteristic)
         switch(characteristic.uuid) {
         case BoseFramesPeripheral.sensorDataUUID:
-            var data = BoseFramesPeripheral().parseSensorData(using: characteristic)
+            var data = bosePeripheral.parseSensorData(using: characteristic)
         case BoseFramesPeripheral.sensorInformationUUID:
-            var data = BoseFramesPeripheral().parseSensorInformation(using: characteristic)
+            var data = bosePeripheral.parseSensorInformation(using: characteristic)
         case BoseFramesPeripheral.sensorConfigurationUUID:
-            var data = BoseFramesPeripheral().parseSensorConfiguration(using: characteristic)
-            data[2] = 20 //Turn on Accelerometer Data with a Sampling Rate of 20ms
+            var data = bosePeripheral.parseSensorConfiguration(using: characteristic)
+//            data[2] = 20 //Turn on Accelerometer Data with a Sampling Rate of 20ms
 //            data[5] = 20 //Turn on Gyroscope Data
 //            data[8] = 20 //Turn on Rotation Data
 //            data[11] = 20 //Turn on Game Rotation Data
-            peripheral.writeValue(data, for: characteristic, type: .withResponse)
+//            peripheral.writeValue(data, for: characteristic, type: .withResponse)
         case BoseFramesPeripheral.gestureDataUUID:
-            var data = BoseFramesPeripheral().parseGestureData(using: characteristic)
+            var data = bosePeripheral.parseGestureData(using: characteristic)
         case BoseFramesPeripheral.gestureInformationUUID:
-            var data = BoseFramesPeripheral().parseGestureInformation(using: characteristic)
+            var data = bosePeripheral.parseGestureInformation(using: characteristic)
         case BoseFramesPeripheral.gestureConfigurationUUID:
-            var data = BoseFramesPeripheral().parseGestureConfiguration(using: characteristic)
+            var data = bosePeripheral.parseGestureConfiguration(using: characteristic)
         default:
             print("Cannot Parse Unsupported Characteristic")
         }
