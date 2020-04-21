@@ -9,8 +9,8 @@
 import UIKit
 import CoreBluetooth
     
-
 class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDelegate {
+
     // Properties
     private var centralManager: CBCentralManager!
     private var peripheral: CBPeripheral!
@@ -20,7 +20,14 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     private var sensorConfigurationCharacteristic: CBCharacteristic?
     private var bosePeripheral = BoseFramesPeripheral()
     
-    
+    // spotify
+    private let playURI = ""
+    private var subscribedToPlayerState: Bool = false
+    private var playerState: SPTAppRemotePlayerState?
+    @IBOutlet weak var songName: UILabel!
+    @IBOutlet weak var songArtists: UILabel!
+    @IBOutlet weak var songBPM: UILabel!
+        
     @IBOutlet weak var accelerometerToggle: UIButton!
     private var accelerometerEnabled = false
     @IBAction func toggleAccelerometer(_ sender: Any) {
@@ -174,6 +181,66 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
         }
     }
     
+    // Spotify song viewing code
+    var defaultCallback: SPTAppRemoteCallback {
+        get {
+            return {[weak self] _, error in
+                if let error = error {
+                    print(error)
+                }
+            }
+        }
+    }
     
+    var appRemote: SPTAppRemote? {
+        get {
+            return (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.appRemote
+        }
+    }
+    
+    // subscribes to changes in player state
+    private func subscribeToPlayerState() {
+        guard (!subscribedToPlayerState) else { return }
+        appRemote?.playerAPI!.delegate = self
+        appRemote?.playerAPI?.subscribe { (_, error) -> Void in
+            guard error == nil else { return }
+            self.subscribedToPlayerState = true
+        }
+    }
+    
+    
+    // APP REMOTE
+    func appRemoteConnecting() {
+        print("trying to connect to spotify")
+
+    }
+
+    func appRemoteConnected() {
+        subscribeToPlayerState()
+        appRemote?.playerAPI?.getPlayerState { (result, error) -> Void in
+            guard error == nil else { return }
+            let playerState = result as! SPTAppRemotePlayerState
+            self.updateNowPlaying(playerState: playerState)
+        }
+    }
+
+    func appRemoteDisconnect() {
+        self.subscribedToPlayerState = false
+    }
+
+    // updates track name and artist
+    func updateNowPlaying( playerState: SPTAppRemotePlayerState) {
+        self.songName.text = playerState.track.name
+        self.songArtists.text = playerState.track.artist.name
+    }
 }
+    
+extension ViewController: SPTAppRemotePlayerStateDelegate {
+       func playerStateDidChange(_ playerState: SPTAppRemotePlayerState) {
+           self.playerState = playerState
+        updateNowPlaying(playerState: self.playerState as! SPTAppRemotePlayerState)
+       }
+}
+
+
 

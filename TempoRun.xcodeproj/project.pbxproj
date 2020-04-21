@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B4DE5714244D71A10079BA93 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4DE5713244D71A10079BA93 /* SpotifyiOS.framework */; };
 		CE9452FF2447A04F0014665E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9452FE2447A04F0014665E /* AppDelegate.swift */; };
 		CE9453012447A04F0014665E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9453002447A04F0014665E /* SceneDelegate.swift */; };
 		CE9453032447A04F0014665E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9453022447A04F0014665E /* ViewController.swift */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B4DE5712244D70090079BA93 /* TempoRun-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TempoRun-Bridging-Header.h"; sourceTree = "<group>"; };
+		B4DE5713244D71A10079BA93 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
 		CE9452FB2447A04F0014665E /* TempoRun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TempoRun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9452FE2447A04F0014665E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE9453002447A04F0014665E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4DE5714244D71A10079BA93 /* SpotifyiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,13 +84,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B4DE570F244D6F9D0079BA93 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B4DE5713244D71A10079BA93 /* SpotifyiOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CE9452F22447A04F0014665E = {
 			isa = PBXGroup;
 			children = (
+				B4DE5712244D70090079BA93 /* TempoRun-Bridging-Header.h */,
 				CE9452FD2447A04F0014665E /* TempoRun */,
 				CE9453142447A0510014665E /* TempoRunTests */,
 				CE94531F2447A0510014665E /* TempoRunUITests */,
 				CE9452FC2447A04F0014665E /* Products */,
+				B4DE570F244D6F9D0079BA93 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -443,15 +457,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = R4MHA8YV97;
+				DEVELOPMENT_TEAM = C69FU4TADX;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = TempoRun/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Team3.TempoRun;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = serenado.Team3.TempoRun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TempoRun-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -462,15 +482,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = R4MHA8YV97;
+				DEVELOPMENT_TEAM = C69FU4TADX;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = TempoRun/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Team3.TempoRun;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = serenado.Team3.TempoRun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TempoRun-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
