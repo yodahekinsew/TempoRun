@@ -51,7 +51,8 @@ SPTAppRemoteDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         if let _ = self.appRemote.connectionParameters.accessToken {
             connect()
-        } else {
+        }
+        if appRemote.isConnected != true {
             appRemote.authorizeAndPlayURI("")
             connect()
         }
@@ -72,6 +73,7 @@ SPTAppRemoteDelegate {
     func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
         self.appRemote = appRemote
         print("connected succesfully to spotify")
+        playerViewController.setAccessToken(token: self.accessToken!)
         playerViewController.appRemoteConnected()
     }
 

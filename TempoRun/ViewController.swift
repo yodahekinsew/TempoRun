@@ -24,6 +24,8 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     private let playURI = ""
     private var subscribedToPlayerState: Bool = false
     private var playerState: SPTAppRemotePlayerState?
+    private var accessToken = ""
+    private var currentBPM = 0.0
     @IBOutlet weak var songName: UILabel!
     @IBOutlet weak var songArtists: UILabel!
     @IBOutlet weak var songBPM: UILabel!
@@ -232,7 +234,60 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     func updateNowPlaying( playerState: SPTAppRemotePlayerState) {
         self.songName.text = playerState.track.name
         self.songArtists.text = playerState.track.artist.name
+        let parts = playerState.track.uri.components(separatedBy: ":")
+        if parts.count > 2 {
+            getBPMFromTrack(id: parts[2])
+        }
     }
+    
+    func updateBPMDisplay() {
+        self.songBPM.text = currentBPM.description
+    }
+    
+    func setAccessToken(token: String) {
+        self.accessToken = token
+    }
+    
+    // updates the BPM of the track on a player state change
+    func getBPMFromTrack( id: String) {
+        let endpoint = "https://api.spotify.com/v1/audio-features/" + id
+        guard let requestUrl = URL(string: endpoint) else { print("cannot create URL")
+            fatalError() }
+        
+        var urlRequest = URLRequest(url: requestUrl)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer " + self.accessToken, forHTTPHeaderField: "Authorization")
+        
+          let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+                  if let error = error {
+                      print("Error took place \(error)")
+                      return
+                  }
+                  
+                  // Read HTTP Response Status code
+                  if let response = response as? HTTPURLResponse {
+                      print("Response HTTP Status code: \(response.statusCode)")
+                  }
+                  
+                  // Convert HTTP Response Data to a simple String
+                  if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                      //print("Response data string:\n \(dataString)")
+                    let json_response = try? JSONSerialization.jsonObject(with: data, options: [])
+                    if let dictionary = json_response as? [String: Any] {
+                        if let tempo = dictionary["tempo"] as? Double{
+                            self.currentBPM = tempo
+                            
+                            DispatchQueue.main.async {
+                                self.updateBPMDisplay()
+                            }
+                        }
+                    }
+                  }
+                  
+              }
+          task.resume()
+      }
+    
 }
     
 extension ViewController: SPTAppRemotePlayerStateDelegate {
