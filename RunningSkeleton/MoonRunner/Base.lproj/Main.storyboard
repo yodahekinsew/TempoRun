@@ -580,7 +580,7 @@
         <!--Music-->
         <scene sceneID="pWN-UF-5ST">
             <objects>
-                <viewController id="Fl7-Lb-yn8" sceneMemberID="viewController">
+                <viewController id="Fl7-Lb-yn8" customClass="MusicTabViewController" customModule="MoonRunner" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dmM-Sc-zqI"/>
                         <viewControllerLayoutGuide type="bottom" id="3lA-1b-5y0"/>
