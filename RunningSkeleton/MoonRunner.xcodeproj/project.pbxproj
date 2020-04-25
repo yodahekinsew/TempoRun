@@ -28,6 +28,7 @@
 		18CF26ED1E80290C0097F88C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF26EC1E80290C0097F88C /* HomeViewController.swift */; };
 		18CF26EF1E80291E0097F88C /* NewRunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF26EE1E80291E0097F88C /* NewRunViewController.swift */; };
 		18CF26F11E80292C0097F88C /* RunDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF26F01E80292C0097F88C /* RunDetailsViewController.swift */; };
+		226A7F9B2454B20000550595 /* MusicTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226A7F9A2454B20000550595 /* MusicTabViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		18CF26EC1E80290C0097F88C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		18CF26EE1E80291E0097F88C /* NewRunViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRunViewController.swift; sourceTree = "<group>"; };
 		18CF26F01E80292C0097F88C /* RunDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsViewController.swift; sourceTree = "<group>"; };
+		226A7F9A2454B20000550595 /* MusicTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTabViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				18CF26EC1E80290C0097F88C /* HomeViewController.swift */,
+				226A7F9A2454B20000550595 /* MusicTabViewController.swift */,
 				18CF26EE1E80291E0097F88C /* NewRunViewController.swift */,
 				18CF26F01E80292C0097F88C /* RunDetailsViewController.swift */,
 				1809248A1EF43B39007CF38F /* BadgesTableViewController.swift */,
@@ -234,6 +237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				226A7F9B2454B20000550595 /* MusicTabViewController.swift in Sources */,
 				18CF26EF1E80291E0097F88C /* NewRunViewController.swift in Sources */,
 				180924851EF434F3007CF38F /* Badge.swift in Sources */,
 				18888DD91E7F1D940038A3AF /* CoreDataStack.swift in Sources */,
