@@ -189,7 +189,7 @@
 				TargetAttributes = {
 					18888DBE1E7F0FA80038A3AF = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = TRFJFDRBMR;
+						DevelopmentTeam = C69FU4TADX;
 						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -393,10 +393,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = TRFJFDRBMR;
+				DEVELOPMENT_TEAM = C69FU4TADX;
 				INFOPLIST_FILE = MoonRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = JDH.mRun;
+				PRODUCT_BUNDLE_IDENTIFIER = serenado.TempoRun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 5.0;
@@ -407,10 +407,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = TRFJFDRBMR;
+				DEVELOPMENT_TEAM = C69FU4TADX;
 				INFOPLIST_FILE = MoonRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = JDH.mRun;
+				PRODUCT_BUNDLE_IDENTIFIER = serenado.TempoRun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 5.0;
