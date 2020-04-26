@@ -592,37 +592,57 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ga-e2-HJL">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ga-e2-HJL">
                                 <rect key="frame" x="322" y="504" width="72" height="30"/>
                                 <state key="normal" title="Next Song"/>
+                                <connections>
+                                    <action selector="NextSong:" destination="Fl7-Lb-yn8" eventType="touchUpInside" id="w7p-x5-Q9f"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fjk-Ws-jfs">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fjk-Ws-jfs">
                                 <rect key="frame" x="20" y="504" width="74" height="30"/>
                                 <state key="normal" title="Prev. Song"/>
+                                <connections>
+                                    <action selector="PreviousSong:" destination="Fl7-Lb-yn8" eventType="touchUpInside" id="x0I-kI-Nui"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6yJ-U7-9s6">
-                                <rect key="frame" x="329" y="637" width="59" height="30"/>
-                                <state key="normal" title="Set BPM"/>
-                            </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RBb-Tz-DPV">
-                                <rect key="frame" x="60" y="150" width="295" height="300"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RBb-Tz-DPV">
+                                <rect key="frame" x="59.666666666666657" y="150" width="295" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="295" id="2Zd-pK-mCc"/>
                                     <constraint firstAttribute="height" constant="300" id="gGq-5W-oYZ"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aH1-C2-9h6">
+                                <rect key="frame" x="192" y="504" width="30" height="30"/>
+                                <state key="normal" title="play"/>
+                                <connections>
+                                    <action selector="Button:" destination="Fl7-Lb-yn8" eventType="touchUpInside" id="LKS-yv-CHd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6yJ-U7-9s6">
+                                <rect key="frame" x="107" y="579" width="200" height="84"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="44"/>
+                                <state key="normal" title="Set BPM"/>
+                                <connections>
+                                    <action selector="SetBPM:" destination="Fl7-Lb-yn8" eventType="touchUpInside" id="VqV-et-Eza"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
-                            <constraint firstItem="RBb-Tz-DPV" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" id="3Kq-x8-AHr"/>
-                            <constraint firstItem="Fjk-Ws-jfs" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="7FL-9P-CRH"/>
-                            <constraint firstItem="9Ga-e2-HJL" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="9PJ-jE-2GR"/>
-                            <constraint firstItem="9Ga-e2-HJL" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" id="UEU-ve-kys"/>
-                            <constraint firstItem="Fjk-Ws-jfs" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" id="ZBe-t8-KA5"/>
-                            <constraint firstItem="3lA-1b-5y0" firstAttribute="top" secondItem="6yJ-U7-9s6" secondAttribute="bottom" constant="195" id="a7h-me-AUH"/>
-                            <constraint firstItem="6yJ-U7-9s6" firstAttribute="centerX" secondItem="9Ga-e2-HJL" secondAttribute="centerX" id="hrR-qf-iHG"/>
+                            <constraint firstItem="RBb-Tz-DPV" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" constant="-121" id="3Kq-x8-AHr"/>
+                            <constraint firstItem="Fjk-Ws-jfs" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" constant="-150" id="7FL-9P-CRH"/>
+                            <constraint firstItem="6yJ-U7-9s6" firstAttribute="leading" secondItem="7HL-FV-Fud" secondAttribute="leadingMargin" constant="87" id="937-KO-eH7"/>
+                            <constraint firstItem="9Ga-e2-HJL" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" constant="151" id="9PJ-jE-2GR"/>
+                            <constraint firstItem="aH1-C2-9h6" firstAttribute="centerX" secondItem="RBb-Tz-DPV" secondAttribute="centerX" id="JZl-P4-lNc"/>
+                            <constraint firstItem="3lA-1b-5y0" firstAttribute="top" secondItem="6yJ-U7-9s6" secondAttribute="bottom" constant="145" id="Mw2-6c-3go"/>
+                            <constraint firstItem="9Ga-e2-HJL" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" constant="98" id="UEU-ve-kys"/>
+                            <constraint firstItem="aH1-C2-9h6" firstAttribute="baseline" secondItem="Fjk-Ws-jfs" secondAttribute="baseline" id="Wg5-zL-y1n"/>
+                            <constraint firstItem="Fjk-Ws-jfs" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" constant="98" id="ZBe-t8-KA5"/>
                             <constraint firstItem="RBb-Tz-DPV" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="l8X-6E-8Ik"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6yJ-U7-9s6" secondAttribute="trailing" constant="6" id="wav-At-eaI"/>
+                            <constraint firstItem="6yJ-U7-9s6" firstAttribute="top" secondItem="aH1-C2-9h6" secondAttribute="bottom" constant="45" id="o55-em-Vgg"/>
+                            <constraint firstItem="6yJ-U7-9s6" firstAttribute="centerX" secondItem="aH1-C2-9h6" secondAttribute="centerX" id="oEE-g3-I8G"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Music" image="music.note" catalog="system" id="zYD-J6-ZQo"/>

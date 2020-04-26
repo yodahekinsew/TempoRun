@@ -46,7 +46,23 @@ class MusicTabViewController: UIViewController {
   }
   
   
+  @IBAction func NextSong(_ sender: Any) {
+    
+    print("Next Song Pressed!");
+    
+  }
   
+  @IBAction func PreviousSong(_ sender: Any) {
+    
+    print("Previous Song Pressed!");
+    
+  }
+  
+  @IBAction func SetBPM(_ sender: Any) {
+  
+    print("Set BPM Pressed!");
+  
+  }
   
   
 }
