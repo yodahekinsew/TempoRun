@@ -33,5 +33,20 @@ import UIKit
 class MusicTabViewController: UIViewController {
   
   
+  //Play Pause Button
+  @IBAction func Button(_ sender: UIButton) {
+    if sender.currentTitle == "pause"{
+      //play music here!
+      sender.setTitle("play", for: UIControl.State.normal);
+    }
+    else if sender.currentTitle == "play"{
+      //pause music here!
+      sender.setTitle("pause", for: UIControl.State.normal);
+    }
+  }
+  
+  
+  
+  
   
 }
