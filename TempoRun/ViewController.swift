@@ -19,6 +19,7 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     private var sensorInformationCharacteristic: CBCharacteristic?
     private var sensorConfigurationCharacteristic: CBCharacteristic?
     private var bosePeripheral = BoseFramesPeripheral()
+    private var stepDetector = StepDetector()
     
     // spotify
     private let playURI = ""
@@ -50,11 +51,11 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
             peripheral.writeValue(dataToWrite, for: characteristic, type: .withResponse)
         }
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+//        stepDetector.testFFT()
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
@@ -153,6 +154,11 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
             var data = bosePeripheral.parseSensorInformation(using: characteristic)
         case BoseFramesPeripheral.sensorConfigurationUUID:
             var data = bosePeripheral.parseSensorConfiguration(using: characteristic)
+            print(bosePeripheral.boseAccelerationData)
+            if (bosePeripheral.boseAccelerationData.count > 100)
+            {
+                stepDetector.getBPM(using: bosePeripheral.boseAccelerationData)
+            }
 //            data[2] = 20 //Turn on Accelerometer Data with a Sampling Rate of 20ms
 //            data[5] = 20 //Turn on Gyroscope Data
 //            data[8] = 20 //Turn on Rotation Data
@@ -181,6 +187,10 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
         if let value = characteristic.value {
             print("Characteristic value: \(value) \(value.count)")
         }
+    }
+    
+    func getBPMFromBose() {
+        
     }
     
     // Spotify song viewing code

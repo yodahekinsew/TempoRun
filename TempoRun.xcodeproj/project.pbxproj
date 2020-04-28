@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B4DE5714244D71A10079BA93 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4DE5713244D71A10079BA93 /* SpotifyiOS.framework */; };
+		CE54B4632454E3DD0065B9E6 /* StepDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54B4622454E3DD0065B9E6 /* StepDetector.swift */; };
+		CE54B4652454F2570065B9E6 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54B4642454F2570065B9E6 /* Logger.swift */; };
 		CE9452FF2447A04F0014665E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9452FE2447A04F0014665E /* AppDelegate.swift */; };
 		CE9453012447A04F0014665E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9453002447A04F0014665E /* SceneDelegate.swift */; };
 		CE9453032447A04F0014665E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9453022447A04F0014665E /* ViewController.swift */; };
@@ -40,6 +42,8 @@
 /* Begin PBXFileReference section */
 		B4DE5712244D70090079BA93 /* TempoRun-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TempoRun-Bridging-Header.h"; sourceTree = "<group>"; };
 		B4DE5713244D71A10079BA93 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
+		CE54B4622454E3DD0065B9E6 /* StepDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDetector.swift; sourceTree = "<group>"; };
+		CE54B4642454F2570065B9E6 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		CE9452FB2447A04F0014665E /* TempoRun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TempoRun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9452FE2447A04F0014665E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE9453002447A04F0014665E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,8 +124,10 @@
 				CE9452FE2447A04F0014665E /* AppDelegate.swift */,
 				CE9453002447A04F0014665E /* SceneDelegate.swift */,
 				CE9453022447A04F0014665E /* ViewController.swift */,
+				CE54B4642454F2570065B9E6 /* Logger.swift */,
 				CE9453302447A5B30014665E /* BoseQC35Peripheral.swift */,
 				CE9453322447A5F90014665E /* BoseFramesPeripheral.swift */,
+				CE54B4622454E3DD0065B9E6 /* StepDetector.swift */,
 				CE9453042447A04F0014665E /* Main.storyboard */,
 				CE9453072447A0510014665E /* Assets.xcassets */,
 				CE9453092447A0510014665E /* LaunchScreen.storyboard */,
@@ -282,6 +288,8 @@
 				CE9453332447A5F90014665E /* BoseFramesPeripheral.swift in Sources */,
 				CE9453032447A04F0014665E /* ViewController.swift in Sources */,
 				CE9453312447A5B30014665E /* BoseQC35Peripheral.swift in Sources */,
+				CE54B4632454E3DD0065B9E6 /* StepDetector.swift in Sources */,
+				CE54B4652454F2570065B9E6 /* Logger.swift in Sources */,
 				CE9452FF2447A04F0014665E /* AppDelegate.swift in Sources */,
 				CE9453012447A04F0014665E /* SceneDelegate.swift in Sources */,
 			);
@@ -457,7 +465,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C69FU4TADX;
+				DEVELOPMENT_TEAM = R4MHA8YV97;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -469,7 +477,7 @@
 					"@executable_path/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = serenado.Team3.TempoRun;
+				PRODUCT_BUNDLE_IDENTIFIER = Team3.TempoRun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TempoRun-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -482,7 +490,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C69FU4TADX;
+				DEVELOPMENT_TEAM = R4MHA8YV97;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -494,7 +502,7 @@
 					"@executable_path/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = serenado.Team3.TempoRun;
+				PRODUCT_BUNDLE_IDENTIFIER = Team3.TempoRun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TempoRun-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
