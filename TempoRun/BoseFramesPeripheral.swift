@@ -99,7 +99,7 @@ class BoseFramesPeripheral: NSObject {
     }
     
     func parseSensorData(using sensorDataCharacteristic: CBCharacteristic) -> Data {
-        print("---- Sensor Data ----")
+//        print("---- Sensor Data ----")
         let headerLength = 3
         var offset = 0
         if let value = sensorDataCharacteristic.value {
@@ -115,7 +115,8 @@ class BoseFramesPeripheral: NSObject {
                     let z = Int16(value[offset+4]) << 8 | Int16(value[offset+5])
                     let accuracy = UInt8(value[offset+6])
                     offset += 7
-                    print("Accelerometer Data: x - \(Double(x)/denominator), y - \(Double(y)/denominator), z - \(Double(z)/denominator)")
+                    print("\(Double(x)/denominator) \(Double(y)/denominator) \(Double(z)/denominator)")
+//                    print("Accelerometer Data: x - \(Double(x)/denominator), y - \(Double(y)/denominator), z - \(Double(z)/denominator)")
                 case 1:
                     let x = UInt16(value[offset]) << 8 | UInt16(value[offset+1])
                     let y = UInt16(value[offset+2]) << 8 | UInt16(value[offset+3])

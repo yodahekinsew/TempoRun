@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "DDA394DC-4312-43CF-ABC4-BDE533CD8556"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9FAFC1A1-21F2-4570-B20C-6E7A00DEF21A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TempoRun/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "9FAFC1A1-21F2-4570-B20C-6E7A00DEF21A - 7793c5ecb12e4b32"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.__deallocating_deinit"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "9FAFC1A1-21F2-4570-B20C-6E7A00DEF21A - 64b5ec4b6605bf2f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.__allocating_init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; TempoRun.ViewController"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "9FAFC1A1-21F2-4570-B20C-6E7A00DEF21A - 8198fd27ce065381"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; TempoRun.ViewController"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "508">
+               </Location>
+               <Location
+                  uuid = "9FAFC1A1-21F2-4570-B20C-6E7A00DEF21A - d8ba8f565a070bd4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.__allocating_init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;TempoRun.ViewController&gt;"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "9FAFC1A1-21F2-4570-B20C-6E7A00DEF21A - 29cded6c85044a97"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;TempoRun.ViewController&gt;"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "456">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8FC64166-CEF8-49EE-8B23-96F5F2A50F19"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TempoRun/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "ViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "8FC64166-CEF8-49EE-8B23-96F5F2A50F19 - 5758a02bf5ebd9eb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.accelerometerToggle.getter : Swift.Optional&lt;__C.UIButton&gt;"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "128">
+               </Location>
+               <Location
+                  uuid = "8FC64166-CEF8-49EE-8B23-96F5F2A50F19 - a95c46fd9b4d69d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.accelerometerToggle.setter : Swift.Optional&lt;__C.UIButton&gt;"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "200">
+               </Location>
+               <Location
+                  uuid = "8FC64166-CEF8-49EE-8B23-96F5F2A50F19 - 3f8b38708b0e7de6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.accelerometerToggle.modify : Swift.Optional&lt;__C.UIButton&gt;"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  uuid = "8FC64166-CEF8-49EE-8B23-96F5F2A50F19 - 7e49e236cc49c1af"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.accelerometerToggle.modify : Swift.Optional&lt;__C.UIButton&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "8FC64166-CEF8-49EE-8B23-96F5F2A50F19 - 8198fd27ce065381"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; TempoRun.ViewController"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "2204">
+               </Location>
+               <Location
+                  uuid = "8FC64166-CEF8-49EE-8B23-96F5F2A50F19 - 29cded6c85044a97"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TempoRun.ViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;TempoRun.ViewController&gt;"
+                  moduleName = "TempoRun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joshuaverdejo/Documents/6808/TempoRun/TempoRun/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "2152">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
