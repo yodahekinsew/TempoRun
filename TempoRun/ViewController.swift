@@ -1,4 +1,4 @@
-    //
+//
 //  ViewController.swift
 //  TempoRun
 //
@@ -8,9 +8,14 @@
 
 import UIKit
 import CoreBluetooth
+import CoreMotion
     
 class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDelegate {
-
+    // Pedometer
+    private let activityManager = CMMotionActivityManager()
+    private let pedometer = CMPedometer()
+    private var cadence = 0;
+    
     // Properties
     private var centralManager: CBCentralManager!
     private var peripheral: CBPeripheral!
@@ -20,7 +25,7 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     private var sensorConfigurationCharacteristic: CBCharacteristic?
     private var bosePeripheral = BoseFramesPeripheral()
     
-    // spotify
+    // Spotify
     private let playURI = ""
     private var subscribedToPlayerState: Bool = false
     private var playerState: SPTAppRemotePlayerState?
@@ -29,7 +34,11 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     @IBOutlet weak var songName: UILabel!
     @IBOutlet weak var songArtists: UILabel!
     @IBOutlet weak var songBPM: UILabel!
-        
+    
+    // Pedometer
+    @IBOutlet weak var activityTypeLabel: UILabel!
+    @IBOutlet weak var stepsCountLabel: UILabel!
+    @IBOutlet weak var BPMLabel: UILabel!
     @IBOutlet weak var accelerometerToggle: UIButton!
     private var accelerometerEnabled = false
     @IBAction func toggleAccelerometer(_ sender: Any) {
@@ -51,9 +60,17 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
         }
     }
     
-
+    @IBAction func SetBPM(_ sender: Any) {
+        let seconds = 30.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            // Put your code which should be executed with a delay here
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        startUpdating()
         // Do any additional setup after loading the view.
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
@@ -287,6 +304,52 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
               }
           task.resume()
       }
+    //Pedometer code starts
+    private func startTrackingActivityType() {
+      activityManager.startActivityUpdates(to: OperationQueue.main) {
+          [weak self] (activity: CMMotionActivity?) in
+
+          guard let activity = activity else { return }
+          DispatchQueue.main.async {
+              if activity.walking {
+                  self?.activityTypeLabel.text = "Walking"
+              } else if activity.stationary {
+                  self?.activityTypeLabel.text = "Stationary"
+              } else if activity.running {
+                  self?.activityTypeLabel.text = "Running"
+              } else if activity.automotive {
+                  self?.activityTypeLabel.text = "Automotive"
+              }
+          }
+      }
+    }
+    
+    private func startCountingSteps() {
+      pedometer.startUpdates(from: Date()) {
+          [weak self] pedometerData, error in
+          guard let pedometerData = pedometerData, error == nil else { return }
+
+          DispatchQueue.main.async {
+            self?.stepsCountLabel.text = pedometerData.numberOfSteps.stringValue
+            self?.cadence = pedometerData.currentCadence?.intValue ?? 0
+            self?.BPMLabel.text = String(self!.cadence*60);
+                
+          }
+            
+      }
+    }
+    
+    
+    private func startUpdating() {
+      if CMMotionActivityManager.isActivityAvailable() {
+          startTrackingActivityType()
+      }
+
+      if CMPedometer.isStepCountingAvailable() {
+          startCountingSteps()
+      }
+    }
+    
     
 }
     
