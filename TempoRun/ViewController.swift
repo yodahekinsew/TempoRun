@@ -1,4 +1,4 @@
-    //
+//
 //  ViewController.swift
 //  TempoRun
 //
@@ -39,7 +39,6 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     @IBOutlet weak var activityTypeLabel: UILabel!
     @IBOutlet weak var stepsCountLabel: UILabel!
     @IBOutlet weak var BPMLabel: UILabel!
-    
     @IBOutlet weak var accelerometerToggle: UIButton!
     private var accelerometerEnabled = false
     @IBAction func toggleAccelerometer(_ sender: Any) {
@@ -61,7 +60,14 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
         }
     }
     
-
+    @IBAction func SetBPM(_ sender: Any) {
+        let seconds = 30.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            // Put your code which should be executed with a delay here
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         startUpdating()

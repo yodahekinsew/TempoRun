@@ -15,8 +15,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="EEi-ii-YHv">
+                                <rect key="frame" x="66" y="421" width="282" height="55"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Enable Accelerometer"/>
+                                <connections>
+                                    <action selector="toggleAccelerometer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DYK-bS-VAN"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Song" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohm-RI-Zd5">
-                                <rect key="frame" x="156" y="176" width="102.5" height="62"/>
+                                <rect key="frame" x="156" y="176" width="102" height="62"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="62" id="IbR-MD-MSU"/>
                                 </constraints>
@@ -75,12 +83,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="EEi-ii-YHv">
-                                <rect key="frame" x="66" y="421" width="282" height="55"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Enable Accelerometer"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgF-8b-acq">
+                                <rect key="frame" x="157" y="476" width="101" height="50"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <state key="normal" title="Set BPM"/>
                                 <connections>
-                                    <action selector="toggleAccelerometer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DYK-bS-VAN"/>
+                                    <action selector="SetBPM:" destination="BYZ-38-t0r" eventType="touchUpInside" id="shJ-wV-cHI"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -89,6 +97,7 @@
                             <constraint firstItem="boe-pl-jQQ" firstAttribute="baseline" secondItem="bmu-Eo-cJL" secondAttribute="baseline" id="26H-gi-RVQ"/>
                             <constraint firstItem="ohm-RI-Zd5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="156" id="2FQ-Ry-XGF"/>
                             <constraint firstItem="IJE-aV-IzS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="88" id="68R-aQ-0Uo"/>
+                            <constraint firstItem="hgF-8b-acq" firstAttribute="trailing" secondItem="ohm-RI-Zd5" secondAttribute="trailing" id="85x-CO-K2I"/>
                             <constraint firstItem="a6n-ZC-YEp" firstAttribute="leading" secondItem="6nz-Mv-mj0" secondAttribute="leading" id="8dE-5j-Sut"/>
                             <constraint firstItem="ohm-RI-Zd5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CiR-Sx-QMQ"/>
                             <constraint firstItem="IbA-qg-dV5" firstAttribute="centerX" secondItem="EEi-ii-YHv" secondAttribute="centerX" id="Hhp-p4-W0w"/>
@@ -97,13 +106,16 @@
                             <constraint firstItem="IJE-aV-IzS" firstAttribute="baseline" secondItem="a6n-ZC-YEp" secondAttribute="baseline" id="MOb-Tz-hLH"/>
                             <constraint firstItem="EEi-ii-YHv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="b9O-Ff-aNf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="a6n-ZC-YEp" secondAttribute="trailing" constant="88" id="bfH-Zm-K81"/>
+                            <constraint firstItem="hgF-8b-acq" firstAttribute="centerX" secondItem="EEi-ii-YHv" secondAttribute="centerX" id="eqa-7b-cyz"/>
                             <constraint firstItem="mjc-YF-2af" firstAttribute="centerX" secondItem="IbA-qg-dV5" secondAttribute="centerX" id="gms-wk-i9Z"/>
                             <constraint firstItem="3z9-iX-8RW" firstAttribute="leading" secondItem="boe-pl-jQQ" secondAttribute="leading" id="h07-o2-lws"/>
                             <constraint firstItem="IJE-aV-IzS" firstAttribute="leading" secondItem="3z9-iX-8RW" secondAttribute="leading" id="kIQ-LQ-fgd"/>
+                            <constraint firstItem="hgF-8b-acq" firstAttribute="top" secondItem="EEi-ii-YHv" secondAttribute="bottom" id="kuO-sc-pyR"/>
                             <constraint firstItem="3z9-iX-8RW" firstAttribute="top" secondItem="IJE-aV-IzS" secondAttribute="bottom" constant="70" id="njN-n7-FeF"/>
                             <constraint firstItem="3z9-iX-8RW" firstAttribute="baseline" secondItem="6nz-Mv-mj0" secondAttribute="baseline" id="p06-e9-L3M"/>
                             <constraint firstItem="EEi-ii-YHv" firstAttribute="top" secondItem="IbA-qg-dV5" secondAttribute="bottom" constant="58" id="p4d-Xg-Zc5"/>
                             <constraint firstItem="IbA-qg-dV5" firstAttribute="top" secondItem="mjc-YF-2af" secondAttribute="bottom" constant="25.5" id="pOn-3s-5ms"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hgF-8b-acq" secondAttribute="bottom" constant="336" id="rLB-Kn-Ahh"/>
                             <constraint firstItem="ohm-RI-Zd5" firstAttribute="centerX" secondItem="mjc-YF-2af" secondAttribute="centerX" id="rir-na-jf9"/>
                             <constraint firstItem="6nz-Mv-mj0" firstAttribute="leading" secondItem="bmu-Eo-cJL" secondAttribute="leading" id="uQI-sb-6LI"/>
                             <constraint firstItem="ohm-RI-Zd5" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="132" id="vFZ-yn-Bjt"/>

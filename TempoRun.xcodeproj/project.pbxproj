@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		22121E692457822F0057AD7B /* PedometerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22121E682457822F0057AD7B /* PedometerViewController.swift */; };
 		B4DE5714244D71A10079BA93 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4DE5713244D71A10079BA93 /* SpotifyiOS.framework */; };
 		CE9452FF2447A04F0014665E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9452FE2447A04F0014665E /* AppDelegate.swift */; };
 		CE9453012447A04F0014665E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9453002447A04F0014665E /* SceneDelegate.swift */; };
@@ -39,7 +38,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		22121E682457822F0057AD7B /* PedometerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerViewController.swift; sourceTree = "<group>"; };
 		B4DE5712244D70090079BA93 /* TempoRun-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TempoRun-Bridging-Header.h"; sourceTree = "<group>"; };
 		B4DE5713244D71A10079BA93 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
 		CE9452FB2447A04F0014665E /* TempoRun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TempoRun.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,7 +120,6 @@
 				CE9452FE2447A04F0014665E /* AppDelegate.swift */,
 				CE9453002447A04F0014665E /* SceneDelegate.swift */,
 				CE9453022447A04F0014665E /* ViewController.swift */,
-				22121E682457822F0057AD7B /* PedometerViewController.swift */,
 				CE9453302447A5B30014665E /* BoseQC35Peripheral.swift */,
 				CE9453322447A5F90014665E /* BoseFramesPeripheral.swift */,
 				CE9453042447A04F0014665E /* Main.storyboard */,
@@ -282,7 +279,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22121E692457822F0057AD7B /* PedometerViewController.swift in Sources */,
 				CE9453332447A5F90014665E /* BoseFramesPeripheral.swift in Sources */,
 				CE9453032447A04F0014665E /* ViewController.swift in Sources */,
 				CE9453312447A5B30014665E /* BoseQC35Peripheral.swift in Sources */,
