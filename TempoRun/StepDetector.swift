@@ -11,7 +11,8 @@ import Accelerate
 
 class StepDetector: NSObject {
     
-    private var bpmOverTime : [Float] = []
+    private var bpmOverTimeY : [Float] = []
+    private var bpmOverTimeZ : [Float] = []
     
     func testFFT() -> Void {
         let n = vDSP_Length(2048)
@@ -32,22 +33,44 @@ class StepDetector: NSObject {
     }
     
     func getBPM(using signal: [(x: Float, y: Float, z: Float)]) -> Float {
-        let imuData = signal.map{$0.y} //Get only y-direction IMU data for FFT
-        var maxFrequency: Float = 0.0
-        var maxOffset = 0
-        let frequencies = doFFT(using: imuData)
-        for i in 0 ..< frequencies.count {
-            let frequency = frequencies[i]
-            if (frequency.element < maxFrequency && frequency.offset > 1/50*frequencies.count) {
-                maxFrequency = frequency.element
-                maxOffset = frequency.offset
+        let imuDataZ = signal.map{$0.z} //Get only y-direction IMU data for FFT
+        var maxFrequencyZ: Float = 0.0
+        var maxOffsetZ = 0
+        let frequenciesZ = doFFT(using: imuDataZ)
+        for i in 0 ..< frequenciesZ.count {
+            let frequency = frequenciesZ[i]
+            if (frequency.element < maxFrequencyZ && frequency.offset > 1/50*frequenciesZ.count) {
+                maxFrequencyZ = frequency.element
+                maxOffsetZ = frequency.offset
             }
         }
-        if (bpmOverTime.count == 10) {
-            bpmOverTime.removeFirst(1)
+        if (bpmOverTimeZ.count == 10) {
+            bpmOverTimeZ.removeFirst(1)
         }
-        bpmOverTime.append(Float(maxOffset)*50.0/Float(frequencies.count))
-        return bpmOverTime.reduce(0.0, +)/Float(bpmOverTime.count)
+        bpmOverTimeZ.append(Float(maxOffsetZ)*50.0/Float(frequenciesZ.count))
+        let bpmZ = bpmOverTimeZ.reduce(0.0, +)*60.0/Float(bpmOverTimeY.count)
+        
+        let imuDataY = signal.map{$0.y} //Get only y-direction IMU data for FFT
+        var maxFrequencyY: Float = 0.0
+        var maxOffsetY = 0
+        let frequenciesY = doFFT(using: imuDataY)
+        for i in 0 ..< frequenciesY.count {
+            let frequency = frequenciesY[i]
+            if (frequency.element < maxFrequencyY && frequency.offset > 1/50*frequenciesY.count) {
+                maxFrequencyY = frequency.element
+                maxOffsetY = frequency.offset
+            }
+        }
+        if (bpmOverTimeY.count == 10) {
+            bpmOverTimeY.removeFirst(1)
+        }
+        bpmOverTimeY.append(Float(maxOffsetY)*50.0/Float(frequenciesY.count))
+        let bpmY = bpmOverTimeY.reduce(0.0, +)*60.0/Float(bpmOverTimeY.count)
+        
+        print(bpmZ)
+        print(bpmY)
+        
+        return bpmY
 //        print(foundFrequences)
 //        let frequencies = fftAnalyzer(frameOfSamples: imuData)
 //        let sampling_rate = 50
