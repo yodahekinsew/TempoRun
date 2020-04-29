@@ -25,6 +25,13 @@ class BoseFramesPeripheral: NSObject {
     public static let gestureConfigurationUUID = CBUUID.init(string: "21e550af-f780-477b-9334-1f983296f1d7")
     public static let gestureDataUUID = CBUUID.init(string: "9014dd4e-79ba-4802-a275-894d3b85ac74")
     
+    private var xAccelOverTime : [Float] = []
+    private var yAccelOverTime : [Float] = []
+    private var zAccelOverTime : [Float] = []
+    public var boseAccelerationData: [(x: Float, y: Float, z: Float)] = []
+    public var boseGyroData: [(x: Float, y: Float, z: Float)] = []
+    public var boseRotationData: [(x: Float, y: Float, z: Float, w: Float)] = []
+    
     private var sensors = [
         "accelerometer",
         "gyroscope",
@@ -59,7 +66,6 @@ class BoseFramesPeripheral: NSObject {
     func getSensor(using sensorID: UInt) -> String {
         return sensors[Int(sensorID)]
     }
-    
     
     func parseSensorInformation(using sensorInformationCharacteristic: CBCharacteristic) -> Data {
         print("---- Sensor Information ----")
@@ -109,36 +115,52 @@ class BoseFramesPeripheral: NSObject {
                 offset += headerLength
                 switch(sensorID) {
                 case 0:
-                    let denominator = pow(2.0, 12.0) //Divide by denominator to get value in terms of "gs"
-                    let x = Int16(value[offset]) << 8 | Int16(value[offset+1])
-                    let y = Int16(value[offset+2]) << 8 | Int16(value[offset+3])
-                    let z = Int16(value[offset+4]) << 8 | Int16(value[offset+5])
-                    let accuracy = UInt8(value[offset+6])
+                    let denominator = Float(pow(2.0, 12.0)) //Divide by denominator to get value in terms of "gs"
+                    let x = Float(Int16(value[offset]) << 8 | Int16(value[offset+1]))/denominator
+                    let y = Float(Int16(value[offset+2]) << 8 | Int16(value[offset+3]))/denominator
+                    let z = Float(Int16(value[offset+4]) << 8 | Int16(value[offset+5]))/denominator
+//                    let accuracy = UInt8(value[offset+6])
+                    if (boseAccelerationData.count >= 1000) {
+                        boseAccelerationData.removeFirst(1)
+                    }
+                    if (xAccelOverTime.count > 10) {
+                        xAccelOverTime.removeFirst(1)
+                        yAccelOverTime.removeFirst(1)
+                        zAccelOverTime.removeFirst(1)
+                    }
+                    xAccelOverTime.append(x)
+                    yAccelOverTime.append(y)
+                    zAccelOverTime.append(z)
+                    let xAvg = xAccelOverTime.reduce(0.0,+)/Float(xAccelOverTime.count)
+                    let yAvg = yAccelOverTime.reduce(0.0,+)/Float(yAccelOverTime.count)
+                    let zAvg = zAccelOverTime.reduce(0.0,+)/Float(zAccelOverTime.count)
+                    boseAccelerationData.append((xAvg,yAvg,zAvg))
                     offset += 7
-                    print("\(Double(x)/denominator) \(Double(y)/denominator) \(Double(z)/denominator)")
-//                    print("Accelerometer Data: x - \(Double(x)/denominator), y - \(Double(y)/denominator), z - \(Double(z)/denominator)")
+//                    print("Accelerometer Data: x - \(x), y - \(y), z - \(z)")
                 case 1:
-                    let x = UInt16(value[offset]) << 8 | UInt16(value[offset+1])
-                    let y = UInt16(value[offset+2]) << 8 | UInt16(value[offset+3])
-                    let z = UInt16(value[offset+4]) << 8 | UInt16(value[offset+5])
-                    let accuracy = UInt8(value[offset+6])
+                    let x = Float(UInt16(value[offset]) << 8 | UInt16(value[offset+1]))
+                    let y = Float(UInt16(value[offset+2]) << 8 | UInt16(value[offset+3]))
+                    let z = Float(UInt16(value[offset+4]) << 8 | UInt16(value[offset+5]))
+//                    let accuracy = UInt8(value[offset+6])
+                    boseGyroData.append((x,y,z))
                     offset += 7
-                    print("Gyroscope Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(accuracy)")
+//                    print("Gyroscope Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(accuracy)")
                 case 2:
-                    let x = UInt16(value[offset]) << 8 | UInt16(value[offset+1])
-                    let y = UInt16(value[offset+2]) << 8 | UInt16(value[offset+3])
-                    let z = UInt16(value[offset+4]) << 8 | UInt16(value[offset+5])
-                    let w = UInt16(value[offset+6]) << 8 | UInt16(value[offset+7])
-                    let accuracy = UInt16(value[offset+8]) << 8 | UInt16(value[offset+9])
+                    let x = Float(UInt16(value[offset]) << 8 | UInt16(value[offset+1]))
+                    let y = Float(UInt16(value[offset+2]) << 8 | UInt16(value[offset+3]))
+                    let z = Float(UInt16(value[offset+4]) << 8 | UInt16(value[offset+5]))
+                    let w = Float(UInt16(value[offset+6]) << 8 | UInt16(value[offset+7]))
+//                    let accuracy = UInt16(value[offset+8]) << 8 | UInt16(value[offset+9])
+                    boseRotationData.append((x,y,z,w))
                     offset += 10
-                    print("Rotation Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(w) \(accuracy)")
+//                    print("Rotation Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(w) \(accuracy)")
                 case 3:
-                    let x = UInt16(value[offset]) << 8 | UInt16(value[offset+1])
-                    let y = UInt16(value[offset+2]) << 8 | UInt16(value[offset+3])
-                    let z = UInt16(value[offset+4]) << 8 | UInt16(value[offset+5])
-                    let w = UInt16(value[offset+6]) << 8 | UInt16(value[offset+7])
+//                    let x = UInt16(value[offset]) << 8 | UInt16(value[offset+1])
+//                    let y = UInt16(value[offset+2]) << 8 | UInt16(value[offset+3])
+//                    let z = UInt16(value[offset+4]) << 8 | UInt16(value[offset+5])
+//                    let w = UInt16(value[offset+6]) << 8 | UInt16(value[offset+7])
                     offset += 8
-                    print("Game Rotation Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(w)")
+//                    print("Game Rotation Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(w)")
                 default:
                     print("Unsupported sensor \(sensorID)")
                 }
