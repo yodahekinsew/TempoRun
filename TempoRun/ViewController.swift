@@ -71,7 +71,7 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        startUpdating()
+        startUpdating()
         // Do any additional setup after loading the view.
 //        stepDetector.testFFT()
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -331,7 +331,6 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
           }
       }
     }
-
     private func startCountingSteps() {
       pedometer.startUpdates(from: Date()) {
           [weak self] pedometerData, error in
@@ -357,7 +356,6 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
           startCountingSteps()
       }
     }
-
     
 }
     
