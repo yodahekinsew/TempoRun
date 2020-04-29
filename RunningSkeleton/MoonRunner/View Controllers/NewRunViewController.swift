@@ -191,6 +191,7 @@ class NewRunViewController: UIViewController {
 extension NewRunViewController: SegueHandlerType {
   enum SegueIdentifier: String {
     case details = "RunDetailsViewController"
+    case music = "MusicTabViewController"
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -198,7 +199,11 @@ extension NewRunViewController: SegueHandlerType {
     case .details:
       let destination = segue.destination as! RunDetailsViewController
       destination.run = run
+    case .music:
+      let destination = segue.destination as! MusicTabViewController
+      
     }
+    
   }
 }
 

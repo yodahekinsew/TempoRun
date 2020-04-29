@@ -11,6 +11,8 @@ import Accelerate
 
 class StepDetector: NSObject {
     
+    private var bpmOverTime : [Float] = []
+    
     func testFFT() -> Void {
         let n = vDSP_Length(2048)
 
@@ -29,14 +31,39 @@ class StepDetector: NSObject {
         print(foundFrequencies)
     }
     
-    func getBPM(using signal: [(x: Float, y: Float, z: Float)]) {
+    func getBPM(using signal: [(x: Float, y: Float, z: Float)]) -> Float {
         let imuData = signal.map{$0.y} //Get only y-direction IMU data for FFT
-        print(imuData)
-        let foundFrequences = doFFT(using: imuData)
-        print(foundFrequences)
+        var maxFrequency: Float = 0.0
+        var maxOffset = 0
+        let frequencies = doFFT(using: imuData)
+        for i in 0 ..< frequencies.count {
+            let frequency = frequencies[i]
+            if (frequency.element < maxFrequency && frequency.offset > 1/50*frequencies.count) {
+                maxFrequency = frequency.element
+                maxOffset = frequency.offset
+            }
+        }
+        if (bpmOverTime.count == 10) {
+            bpmOverTime.removeFirst(1)
+        }
+        bpmOverTime.append(Float(maxOffset)*50.0/Float(frequencies.count))
+        return bpmOverTime.reduce(0.0, +)/Float(bpmOverTime.count)
+//        print(foundFrequences)
+//        let frequencies = fftAnalyzer(frameOfSamples: imuData)
+//        let sampling_rate = 50
+//        let n = frequencies.count
+//        var foundFrequencies: [(index: Int, frequency: Float, value: Float)] = []
+//        for i in 0 ..< frequencies.count {
+//            let frequency = frequencies[i]
+//            if (frequency > 1)
+//            {
+//                foundFrequencies.append((i, Float(i*sampling_rate/2)/Float(n), frequency))
+//            }
+//        }
+//        print(foundFrequencies)
     }
     
-    func doFFT(using signal: [Float]) -> [Int] {
+    func doFFT(using signal: [Float]) -> [(offset: Int, element: Float)] {
         let log2n = vDSP_Length(log2(Float(signal.count)))
         guard let fftSetUp = vDSP.FFT(log2n: log2n,
                                       radix: .radix2,
@@ -77,14 +104,14 @@ class StepDetector: NSObject {
             }
         }
         
-        let componentFrequencies = forwardOutputImag.enumerated().filter {
-            $0.element < -1
-        }.map {
-            return $0.offset
-        }
-                
-        // Prints "[1, 5, 25, 30, 75, 100, 300, 500, 512, 1023]"
-        print(componentFrequencies)
+        let componentFrequencies = forwardOutputImag.enumerated().map{return $0}
+//        .filter {
+//            $0.element < -1
+//        }
+//        .map {
+//            return $0.offset
+//        }
+            
         return componentFrequencies
     }
     
@@ -114,9 +141,6 @@ class StepDetector: NSObject {
 
         let realFloats = Array(reals)
         let imaginaryFloats = Array(imags)
-
-        print(realFloats)
-        print(imaginaryFloats)
 
         return realFloats
     }
