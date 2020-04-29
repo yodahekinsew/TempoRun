@@ -1,4 +1,4 @@
-    //
+//
 //  ViewController.swift
 //  TempoRun
 //
@@ -8,9 +8,14 @@
 
 import UIKit
 import CoreBluetooth
+import CoreMotion
     
 class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDelegate {
-
+    // Pedometer
+    private let activityManager = CMMotionActivityManager()
+    private let pedometer = CMPedometer()
+    private var cadence = 0;
+    
     // Properties
     private var centralManager: CBCentralManager!
     private var peripheral: CBPeripheral!
@@ -21,7 +26,7 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     private var bosePeripheral = BoseFramesPeripheral()
     private var stepDetector = StepDetector()
     
-    // spotify
+    // Spotify
     private let playURI = ""
     private var subscribedToPlayerState: Bool = false
     private var playerState: SPTAppRemotePlayerState?
@@ -30,7 +35,11 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     @IBOutlet weak var songName: UILabel!
     @IBOutlet weak var songArtists: UILabel!
     @IBOutlet weak var songBPM: UILabel!
-        
+    
+    // Pedometer
+    @IBOutlet weak var activityTypeLabel: UILabel!
+    @IBOutlet weak var stepsCountLabel: UILabel!
+    @IBOutlet weak var BPMLabel: UILabel!
     @IBOutlet weak var accelerometerToggle: UIButton!
     private var accelerometerEnabled = false
     @IBAction func toggleAccelerometer(_ sender: Any) {
@@ -51,9 +60,18 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
             peripheral.writeValue(dataToWrite, for: characteristic, type: .withResponse)
         }
     }
-
+    
+    @IBAction func SetBPM(_ sender: Any) {
+        let seconds = 30.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            // Put your code which should be executed with a delay here
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        startUpdating()
         // Do any additional setup after loading the view.
 //        stepDetector.testFFT()
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -150,15 +168,15 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
         switch(characteristic.uuid) {
         case BoseFramesPeripheral.sensorDataUUID:
             var data = bosePeripheral.parseSensorData(using: characteristic)
+            if (bosePeripheral.boseAccelerationData.count == 1000)
+            {
+                let bpm = stepDetector.getBPM(using: bosePeripheral.boseAccelerationData)
+                print(bpm)
+            }
         case BoseFramesPeripheral.sensorInformationUUID:
             var data = bosePeripheral.parseSensorInformation(using: characteristic)
         case BoseFramesPeripheral.sensorConfigurationUUID:
             var data = bosePeripheral.parseSensorConfiguration(using: characteristic)
-            print(bosePeripheral.boseAccelerationData)
-            if (bosePeripheral.boseAccelerationData.count > 100)
-            {
-                stepDetector.getBPM(using: bosePeripheral.boseAccelerationData)
-            }
 //            data[2] = 20 //Turn on Accelerometer Data with a Sampling Rate of 20ms
 //            data[5] = 20 //Turn on Gyroscope Data
 //            data[8] = 20 //Turn on Rotation Data
@@ -189,10 +207,7 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
         }
     }
     
-    func getBPMFromBose() {
-        
-    }
-    
+
     // Spotify song viewing code
     var defaultCallback: SPTAppRemoteCallback {
         get {
@@ -203,13 +218,13 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
             }
         }
     }
-    
+
     var appRemote: SPTAppRemote? {
         get {
             return (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.appRemote
         }
     }
-    
+
     // subscribes to changes in player state
     private func subscribeToPlayerState() {
         guard (!subscribedToPlayerState) else { return }
@@ -219,8 +234,8 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
             self.subscribedToPlayerState = true
         }
     }
-    
-    
+
+
     // APP REMOTE
     func appRemoteConnecting() {
         print("trying to connect to spotify")
@@ -249,36 +264,36 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
             getBPMFromTrack(id: parts[2])
         }
     }
-    
+
     func updateBPMDisplay() {
         self.songBPM.text = currentBPM.description
     }
-    
+
     func setAccessToken(token: String) {
         self.accessToken = token
     }
-    
+
     // updates the BPM of the track on a player state change
     func getBPMFromTrack( id: String) {
         let endpoint = "https://api.spotify.com/v1/audio-features/" + id
         guard let requestUrl = URL(string: endpoint) else { print("cannot create URL")
             fatalError() }
-        
+
         var urlRequest = URLRequest(url: requestUrl)
         urlRequest.httpMethod = "GET"
         urlRequest.setValue("Bearer " + self.accessToken, forHTTPHeaderField: "Authorization")
-        
+
           let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
                   if let error = error {
                       print("Error took place \(error)")
                       return
                   }
-                  
+
                   // Read HTTP Response Status code
                   if let response = response as? HTTPURLResponse {
                       print("Response HTTP Status code: \(response.statusCode)")
                   }
-                  
+
                   // Convert HTTP Response Data to a simple String
                   if let data = data, let dataString = String(data: data, encoding: .utf8) {
                       //print("Response data string:\n \(dataString)")
@@ -286,17 +301,63 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
                     if let dictionary = json_response as? [String: Any] {
                         if let tempo = dictionary["tempo"] as? Double{
                             self.currentBPM = tempo
-                            
+
                             DispatchQueue.main.async {
                                 self.updateBPMDisplay()
                             }
                         }
                     }
                   }
-                  
+
               }
           task.resume()
       }
+    //Pedometer code starts
+    private func startTrackingActivityType() {
+      activityManager.startActivityUpdates(to: OperationQueue.main) {
+          [weak self] (activity: CMMotionActivity?) in
+
+          guard let activity = activity else { return }
+          DispatchQueue.main.async {
+              if activity.walking {
+                  self?.activityTypeLabel.text = "Walking"
+              } else if activity.stationary {
+                  self?.activityTypeLabel.text = "Stationary"
+              } else if activity.running {
+                  self?.activityTypeLabel.text = "Running"
+              } else if activity.automotive {
+                  self?.activityTypeLabel.text = "Automotive"
+              }
+          }
+      }
+    }
+
+    private func startCountingSteps() {
+      pedometer.startUpdates(from: Date()) {
+          [weak self] pedometerData, error in
+          guard let pedometerData = pedometerData, error == nil else { return }
+
+          DispatchQueue.main.async {
+            self?.stepsCountLabel.text = pedometerData.numberOfSteps.stringValue
+            self?.cadence = pedometerData.currentCadence?.intValue ?? 0
+            self?.BPMLabel.text = String(self!.cadence*60);
+
+          }
+
+      }
+    }
+
+
+    private func startUpdating() {
+      if CMMotionActivityManager.isActivityAvailable() {
+          startTrackingActivityType()
+      }
+
+      if CMPedometer.isStepCountingAvailable() {
+          startCountingSteps()
+      }
+    }
+
     
 }
     
