@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAppRemoteDelegate {
   )
 
   lazy var appRemote: SPTAppRemote = {
-    let appRemote = SPTAppRemote(configuration: self.configuration, logLevel: .debug)
+    let appRemote = SPTAppRemote(configuration: self.configuration, logLevel: .error)
     appRemote.connectionParameters.accessToken = self.accessToken
     appRemote.delegate = self
     return appRemote
