@@ -41,6 +41,8 @@
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>TempRun uses Bluetooth</string>
+	<key>NSMotionUsageDescription</key>
+	<string>TempRun uses this</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -32,18 +32,22 @@ import UIKit
 
 class MusicTabViewController: UIViewController {
 
-    @IBOutlet var trackName: UILabel!
-    @IBOutlet var artistName: UILabel!
-    @IBOutlet var albumArtImageView: UIImageView!
-    
-    private var subscribedToPlayerState: Bool = false
-    private var playerState: SPTAppRemotePlayerState?
+  @IBOutlet var trackName: UILabel!
+  @IBOutlet var artistName: UILabel!
+  @IBOutlet var contextName: UILabel!
+  @IBOutlet var albumArtImageView: UIImageView!
+  
+  private var subscribedToPlayerState: Bool = false
+  private var playerState: SPTAppRemotePlayerState?
+  private var currentContext = URL(string:"")
+  private var BPMTable = Dictionary<String, Double>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
     if appRemote?.isConnected == true {
       appRemoteConnected()
     }
+    getPlayerState()
   }
   
   var defaultCallback: SPTAppRemoteCallback {
@@ -67,6 +71,13 @@ class MusicTabViewController: UIViewController {
   private func updateNowPlaying(_ playerState: SPTAppRemotePlayerState) {
     trackName.text = playerState.track.name
     artistName.text = playerState.track.artist.name
+    contextName.text = playerState.contextTitle
+    if (playerState.contextURI != currentContext) {
+      print("new context")
+      self.BPMTable = Dictionary<String, Double>()
+      makeBPMTable(context: playerState.contextURI)
+      currentContext = playerState.contextURI
+    }
     fetchAlbumArtForTrack(playerState.track) { (image) -> Void in
         self.updateAlbumArtWithImage(image)
     }
@@ -123,7 +134,19 @@ class MusicTabViewController: UIViewController {
   
   // TODO: to implement
   @IBAction func SetBPM(_ sender: Any) {
+    let testBPM = 100.0
+    let threshold = 5.0
     print("Set BPM Pressed!");
+    //print(BPMTable)
+    // queue songs with matching BPM
+    for (song, tempo) in BPMTable {
+      if abs(tempo - testBPM) < threshold {
+        print("queuing this song: ", song, "with BPM of ", tempo)
+        appRemote?.playerAPI?.enqueueTrackUri(song, callback: defaultCallback)
+      }
+    }
+    
+    appRemote?.playerAPI?.skip(toNext: defaultCallback)
   
   }
   
@@ -145,6 +168,62 @@ class MusicTabViewController: UIViewController {
           callback(image)
       })
   }
+  
+  private func makeBPMTable(context : URL) {
+ 
+    appRemote?.contentAPI?.fetchContentItem(forURI: context.absoluteString, callback: {  (result, error) -> Void in
+      if let _ = result {
+        self.appRemote?.contentAPI?.fetchChildren(of: result as! SPTAppRemoteContentItem, callback: { (children, error) -> Void in
+          var songs = children as! [SPTAppRemoteContentItem]
+          for song in songs {
+            self.getBPMFromTrack(uri: song.uri)
+          }
+          
+          })
+      }
+    })
+  }
+  
+  private func getBPMFromTrack( uri : String) {
+    let parts = uri.components(separatedBy: ":")
+    var id = ""
+    if parts.count > 2 {
+      id = parts[2]
+    }
+    let endpoint = "https://api.spotify.com/v1/audio-features/" + id
+    var tempo = 0.0
+    guard let requestUrl = URL(string: endpoint) else { print("cannot create URL")
+          fatalError() }
+    var urlRequest = URLRequest(url: requestUrl)
+    urlRequest.httpMethod = "GET"
+    urlRequest.setValue("Bearer " + (appRemote?.connectionParameters.accessToken)!, forHTTPHeaderField: "Authorization")
+
+    let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+        if let error = error {
+            print("Error took place \(error)")
+            return
+        }
+
+        // Read HTTP Response Status code
+        if let response = response as? HTTPURLResponse {
+            print("Response HTTP Status code: \(response.statusCode)")
+        }
+
+        // Convert HTTP Response Data to a simple String
+        if let data = data, let dataString = String(data: data, encoding: .utf8) {
+            //print("Response data string:\n \(dataString)")
+          let json_response = try? JSONSerialization.jsonObject(with: data, options: [])
+          if let dictionary = json_response as? [String: Any] {
+              if let tempo = dictionary["tempo"] as? Double{
+                self.BPMTable[uri] = tempo
+
+              }
+          }
+        }
+    }
+      
+    task.resume()
+    }
 }
  
 extension MusicTabViewController: SPTAppRemotePlayerStateDelegate {

@@ -639,6 +639,18 @@
                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playing From" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhv-zu-ign">
+                                <rect key="frame" x="150.66666666666666" y="81" width="112.99999999999997" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Context" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MmH-6F-XCr">
+                                <rect key="frame" x="169" y="113" width="76" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
@@ -652,12 +664,16 @@
                             <constraint firstItem="8t8-y3-xKk" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="LzD-or-XMZ"/>
                             <constraint firstItem="9Ga-e2-HJL" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" constant="98" id="UEU-ve-kys"/>
                             <constraint firstItem="aH1-C2-9h6" firstAttribute="baseline" secondItem="Fjk-Ws-jfs" secondAttribute="baseline" id="Wg5-zL-y1n"/>
+                            <constraint firstItem="MmH-6F-XCr" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="Z26-xE-bDY"/>
                             <constraint firstItem="Fjk-Ws-jfs" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" constant="98" id="ZBe-t8-KA5"/>
+                            <constraint firstItem="MmH-6F-XCr" firstAttribute="top" secondItem="lhv-zu-ign" secondAttribute="bottom" constant="8" id="aQU-Rd-gyq"/>
+                            <constraint firstItem="RBb-Tz-DPV" firstAttribute="top" secondItem="MmH-6F-XCr" secondAttribute="bottom" constant="10" id="ap7-wY-Jjt"/>
                             <constraint firstItem="Hwj-he-iYk" firstAttribute="top" secondItem="6yJ-U7-9s6" secondAttribute="bottom" constant="8" id="cku-Rb-Nfb"/>
                             <constraint firstItem="RBb-Tz-DPV" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="l8X-6E-8Ik"/>
                             <constraint firstItem="8t8-y3-xKk" firstAttribute="top" secondItem="Hwj-he-iYk" secondAttribute="bottom" constant="20" id="nfU-TV-8ax"/>
                             <constraint firstItem="6yJ-U7-9s6" firstAttribute="top" secondItem="aH1-C2-9h6" secondAttribute="bottom" constant="30" id="o55-em-Vgg"/>
                             <constraint firstItem="6yJ-U7-9s6" firstAttribute="centerX" secondItem="aH1-C2-9h6" secondAttribute="centerX" id="oEE-g3-I8G"/>
+                            <constraint firstItem="lhv-zu-ign" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="pPB-ix-PMg"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Music" image="music.note" catalog="system" id="zYD-J6-ZQo"/>
@@ -665,6 +681,7 @@
                     <connections>
                         <outlet property="albumArtImageView" destination="RBb-Tz-DPV" id="EQd-fA-buG"/>
                         <outlet property="artistName" destination="8t8-y3-xKk" id="LEK-tL-PUb"/>
+                        <outlet property="contextName" destination="MmH-6F-XCr" id="Ab9-5B-BQC"/>
                         <outlet property="trackName" destination="Hwj-he-iYk" id="oyG-j1-7kT"/>
                     </connections>
                 </viewController>

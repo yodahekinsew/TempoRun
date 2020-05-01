@@ -13,7 +13,7 @@ SPTAppRemoteDelegate {
 
     static private let kAccessTokenKey = "access-token-key"
     private let redirectUri = URL(string:"spotify-ios-quick-start://spotify-login-callback")!
-    private let clientIdentifier = "78ec9630ae5743b4af7f9536a52bdbf1"
+    private let clientIdentifier = "24031a58b9d44ab193ea364e4ecd6b80"
     //Yoda:c657481a5c484e21a70a0284b06e031d
     //Josh:24031a58b9d44ab193ea364e4ecd6b80
     //Serena: 78ec9630ae5743b4af7f9536a52bdbf1
