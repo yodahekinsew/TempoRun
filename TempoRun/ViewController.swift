@@ -9,7 +9,8 @@
 import UIKit
 import CoreBluetooth
 import CoreMotion
-    
+import AVFoundation
+
 class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDelegate {
     // Pedometer
     private let activityManager = CMMotionActivityManager()
@@ -122,7 +123,7 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
                 if service.uuid == BoseFramesPeripheral.boseServiceUUID {
                     print("Bose AR service found")
                     //Now kick off discovery of characteristics
-                    peripheral.discoverCharacteristics([BoseFramesPeripheral.sensorConfigurationUUID, BoseFramesPeripheral.sensorInformationUUID, BoseFramesPeripheral.sensorDataUUID], for: service)
+                    peripheral.discoverCharacteristics([BoseFramesPeripheral.sensorConfigurationUUID, BoseFramesPeripheral.sensorInformationUUID, BoseFramesPeripheral.sensorDataUUID, BoseFramesPeripheral.gestureConfigurationUUID, BoseFramesPeripheral.gestureInformationUUID, BoseFramesPeripheral.gestureDataUUID], for: service)
                     return
                 }
             }

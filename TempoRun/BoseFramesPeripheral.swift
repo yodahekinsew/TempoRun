@@ -138,13 +138,14 @@ class BoseFramesPeripheral: NSObject {
                     offset += 7
 //                    print("Accelerometer Data: x - \(x), y - \(y), z - \(z)")
                 case 1:
-                    let x = Float(UInt16(value[offset]) << 8 | UInt16(value[offset+1]))
-                    let y = Float(UInt16(value[offset+2]) << 8 | UInt16(value[offset+3]))
-                    let z = Float(UInt16(value[offset+4]) << 8 | UInt16(value[offset+5]))
-//                    let accuracy = UInt8(value[offset+6])
+                    let denominator = Float(pow(2.0, 12.0))
+                    let x = Float(UInt16(value[offset]) << 8 | UInt16(value[offset+1]))/denominator
+                    let y = Float(UInt16(value[offset+2]) << 8 | UInt16(value[offset+3]))/denominator
+                    let z = Float(UInt16(value[offset+4]) << 8 | UInt16(value[offset+5]))/denominator
+                    let accuracy = UInt8(value[offset+6])
                     boseGyroData.append((x,y,z))
                     offset += 7
-//                    print("Gyroscope Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(accuracy)")
+                    print("Gyroscope Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(accuracy)")
                 case 2:
                     let x = Float(UInt16(value[offset]) << 8 | UInt16(value[offset+1]))
                     let y = Float(UInt16(value[offset+2]) << 8 | UInt16(value[offset+3]))
@@ -170,16 +171,45 @@ class BoseFramesPeripheral: NSObject {
         return Data()
     }
     
-    func parseGestureConfiguration(using sensorDataCharacteristic: CBCharacteristic) -> Data {
+    func parseGestureInformation(using gestureInformationCharacteristic: CBCharacteristic) -> Data {
+        print("---- Gesture Information ----")
+        let length = 3
+        var offset = 0
+        if let value = gestureInformationCharacteristic.value {
+            while(offset + length <= value.count) {
+                let gestureID = UInt8(value[offset])
+                let configurationPayloadLength = UInt16(value[offset+1]) << 8 | UInt16(value[offset+2])
+                print("Gesture Information Entry: \(gestureID) \(configurationPayloadLength)")
+                offset += length
+            }
+            return value
+        }
         return Data()
     }
     
-    func parseGestureInformation(using sensorDataCharacteristic: CBCharacteristic) -> Data {
+    func parseGestureConfiguration(using gestureConfigurationCharacteristic: CBCharacteristic) -> Data {
+        print("---- Gesture Configuration ----")
+        let length = 2
+        var offset = 0
+        if let value = gestureConfigurationCharacteristic.value {
+            while(offset + length <= value.count) {
+                let gestureID = UInt8(value[offset])
+                let enabled = UInt8(value[offset+1])
+                print("Gesture Configuration Entry: \(gestureID) \(enabled)")
+                offset += length
+            }
+            return value
+        }
         return Data()
     }
     
-    func parseGestureData(using sensorDataCharacteristic: CBCharacteristic) -> Data {
+    func parseGestureData(using gestureDataCharacteristic: CBCharacteristic) -> Data {
+        var offset = 0
+        if let value = gestureDataCharacteristic.value {
+            let gestureID = UInt8(value[offset])
+            let timestamp = UInt16(value[offset+1]) << 8 | UInt16(value[offset+2])
+            print("Gesture Data Entry: \(gestureID), \(timestamp)")
+        }
         return Data()
     }
-    
 }

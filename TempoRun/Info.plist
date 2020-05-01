@@ -4,6 +4,8 @@
 <dict>
 	<key>NSMotionUsageDescription</key>
 	<string>TempRun uses this</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>TempoRun uses the Microphone</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
