@@ -26,6 +26,7 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
     private var sensorConfigurationCharacteristic: CBCharacteristic?
     private var bosePeripheral = BoseFramesPeripheral()
     private var stepDetector = StepDetector()
+    private var positionTracker = PositionTracker()
     
     // Spotify
     private let playURI = ""
@@ -48,12 +49,13 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
         if accelerometerEnabled {
             accelerometerEnabled = false
             accelerometerToggle.setTitle("Enable Accelerometer", for: .normal)
-            dataToWrite[2] = 0
+            dataToWrite[8] = 0
         } else {
             accelerometerEnabled = true
             accelerometerToggle.setTitle("Disable Accelerometer", for: .normal)
-            dataToWrite[2] = 20
+            dataToWrite[8] = 20
         }
+        dataToWrite[0] = 0
         dataToWrite[3] = 1
         dataToWrite[6] = 2
         dataToWrite[9] = 3
@@ -74,7 +76,9 @@ class ViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDe
         super.viewDidLoad()
         startUpdating()
         // Do any additional setup after loading the view.
-//        stepDetector.testFFT()
+        //stepDetector.testFFT()
+        positionTracker.setupLocationManager()
+        positionTracker.startRecordingLocation()
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     

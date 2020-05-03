@@ -30,6 +30,9 @@
 		18CF26F11E80292C0097F88C /* RunDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF26F01E80292C0097F88C /* RunDetailsViewController.swift */; };
 		226A7F9B2454B20000550595 /* MusicTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226A7F9A2454B20000550595 /* MusicTabViewController.swift */; };
 		B499403D245655CA00C26A76 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B499403C245655CA00C26A76 /* SpotifyiOS.framework */; };
+		CEC9C664245F783D00F3203D /* PositionTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9C663245F783D00F3203D /* PositionTracker.swift */; };
+		CEC9C666245F784D00F3203D /* StepDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9C665245F784D00F3203D /* StepDetector.swift */; };
+		CEC9C668245F786900F3203D /* BoseFramesPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9C667245F786900F3203D /* BoseFramesPeripheral.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +62,9 @@
 		226A7F9A2454B20000550595 /* MusicTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTabViewController.swift; sourceTree = "<group>"; };
 		B499403C245655CA00C26A76 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
 		B499403E2456560A00C26A76 /* TempoRun-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TempoRun-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		CEC9C663245F783D00F3203D /* PositionTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionTracker.swift; sourceTree = "<group>"; };
+		CEC9C665245F784D00F3203D /* StepDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDetector.swift; sourceTree = "<group>"; };
+		CEC9C667245F786900F3203D /* BoseFramesPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoseFramesPeripheral.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +113,9 @@
 			isa = PBXGroup;
 			children = (
 				B499403E2456560A00C26A76 /* TempoRun-Bridging-Header.h */,
+				CEC9C663245F783D00F3203D /* PositionTracker.swift */,
+				CEC9C665245F784D00F3203D /* StepDetector.swift */,
+				CEC9C667245F786900F3203D /* BoseFramesPeripheral.swift */,
 				18888DC21E7F0FA80038A3AF /* AppDelegate.swift */,
 				18CF26E81E8021390097F88C /* Storyboards and Assets */,
 				18CF26EB1E8028D40097F88C /* View Controllers */,
@@ -203,7 +212,7 @@
 				TargetAttributes = {
 					18888DBE1E7F0FA80038A3AF = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = C69FU4TADX;
+						DevelopmentTeam = R4MHA8YV97;
 						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -260,7 +269,10 @@
 				18CF26F11E80292C0097F88C /* RunDetailsViewController.swift in Sources */,
 				1809248D1EF43E84007CF38F /* BadgeDetailsViewController.swift in Sources */,
 				180924821EF33DE2007CF38F /* MulticolorPolyline.swift in Sources */,
+				CEC9C668245F786900F3203D /* BoseFramesPeripheral.swift in Sources */,
 				18888DC31E7F0FA80038A3AF /* AppDelegate.swift in Sources */,
+				CEC9C664245F783D00F3203D /* PositionTracker.swift in Sources */,
+				CEC9C666245F784D00F3203D /* StepDetector.swift in Sources */,
 				18CF26ED1E80290C0097F88C /* HomeViewController.swift in Sources */,
 				187AF9A71EF2FC1200C2B8E7 /* FormatDisplay.swift in Sources */,
 				180924871EF4369B007CF38F /* BadgeStatus.swift in Sources */,
@@ -407,15 +419,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = C69FU4TADX;
+				DEVELOPMENT_TEAM = R4MHA8YV97;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = MoonRunner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = serenado.TempoRun;
+				PRODUCT_BUNDLE_IDENTIFIER = Team3.TempoRun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TempoRun-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
@@ -427,15 +440,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = C69FU4TADX;
+				DEVELOPMENT_TEAM = R4MHA8YV97;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = MoonRunner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = serenado.TempoRun;
+				PRODUCT_BUNDLE_IDENTIFIER = Team3.TempoRun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TempoRun-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;

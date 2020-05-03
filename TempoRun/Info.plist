@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSMotionUsageDescription</key>
-	<string>TempRun uses this</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>TempoRun uses the Microphone</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -41,6 +37,12 @@
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>TempRun uses Bluetooth</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>TempoRun uses Location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>TempoRun uses Location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>TempoRun uses the Microphone</string>
 	<key>NSMotionUsageDescription</key>
 	<string>TempRun uses this</string>
 	<key>UIApplicationSceneManifest</key>
@@ -62,6 +64,12 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+		<string>processing</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
