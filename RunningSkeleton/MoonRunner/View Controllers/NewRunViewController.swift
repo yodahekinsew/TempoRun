@@ -71,6 +71,7 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   private var bosePeripheral = BoseFramesPeripheral()
   private var stepDetector = StepDetector()
   private var positionTracker = PositionTracker()
+  public var runningBPM: Float = 0.0
   
   private var run: Run?
   private let locationManager = LocationManager.shared
@@ -223,17 +224,29 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
 //  }
   
   // -----Bose Code-----
-  func turnOnSensors(using sensorConfigurationCharacteristic: CBCharacteristic?) {
+  func enableSensors(using sensorConfigurationCharacteristic: CBCharacteristic?) {
       var dataToWrite = Data(count: 12)
       dataToWrite[0] = 0
       dataToWrite[2] = 20
       dataToWrite[3] = 1
+      dataToWrite[5] = 20
       dataToWrite[6] = 2
-      dataToWrite[8] = 2
+      dataToWrite[8] = 20
       dataToWrite[9] = 3
       if let characteristic = sensorConfigurationCharacteristic {
           peripheral.writeValue(dataToWrite, for: characteristic, type: .withResponse)
       }
+  }
+  
+  func enableGestures(using gestureConfigurationCharacteristic: CBCharacteristic?) {
+    var dataToWrite = Data(count: 6)
+    dataToWrite[2] = 130
+    dataToWrite[3] = 1
+    dataToWrite[4] = 131
+    dataToWrite[5] = 1
+    if let characteristic = sensorConfigurationCharacteristic {
+        peripheral.writeValue(dataToWrite, for: characteristic, type: .withResponse)
+    }
   }
 
   // If we're powered on, start scanning
@@ -307,7 +320,7 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
                   sensorDataCharacteristic = characteristic
                   print("Found Sensor Data Characteristic")
                   peripheral.setNotifyValue(true, for: characteristic)
-                  turnOnSensors(using: characteristic)
+                  enableSensors(using: characteristic)
               case BoseFramesPeripheral.gestureConfigurationUUID:
                   print("Found Gesture Configuration Characteristic")
               case BoseFramesPeripheral.gestureInformationUUID:
@@ -315,6 +328,7 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
               case BoseFramesPeripheral.gestureDataUUID:
                   print("Found Gesture Data Characteristic")
                   peripheral.setNotifyValue(true, for: characteristic)
+                  enableGestures(using: characteristic)
               default:
                   print("Found Unsupported Characteristic")
               }
@@ -327,20 +341,13 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
       switch(characteristic.uuid) {
       case BoseFramesPeripheral.sensorDataUUID:
           var data = bosePeripheral.parseSensorData(using: characteristic)
-          if (bosePeripheral.boseAccelerationData.count == 1000)
-          {
-              let bpm = stepDetector.getBPM(using: bosePeripheral.boseAccelerationData)
-              print(bpm)
+          if (bosePeripheral.boseAccelerationData.count == 1000) {
+              runningBPM = stepDetector.getBPM(using: bosePeripheral.boseAccelerationData)
           }
       case BoseFramesPeripheral.sensorInformationUUID:
           var data = bosePeripheral.parseSensorInformation(using: characteristic)
       case BoseFramesPeripheral.sensorConfigurationUUID:
           var data = bosePeripheral.parseSensorConfiguration(using: characteristic)
-//            data[2] = 20 //Turn on Accelerometer Data with a Sampling Rate of 20ms
-//            data[5] = 20 //Turn on Gyroscope Data
-//            data[8] = 20 //Turn on Rotation Data
-//            data[11] = 20 //Turn on Game Rotation Data
-//            peripheral.writeValue(data, for: characteristic, type: .withResponse)
       case BoseFramesPeripheral.gestureDataUUID:
           var data = bosePeripheral.parseGestureData(using: characteristic)
       case BoseFramesPeripheral.gestureInformationUUID:

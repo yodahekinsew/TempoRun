@@ -169,20 +169,10 @@ class BoseFramesPeripheral: NSObject {
                     let accuracy = Int16(value[offset+8]) << 8 | Int16(value[offset+9])
                     offset += 10
                     let d = sqrtf(w*w+x*x+y*y+z*z)
-                    let correctionX = -0.7071067811865475
-                    let correctionW =  0.7071067811865476
-                    print("------")
-//                    print("\(discretize(num: x)) \(discretize(num: y)) \(discretize(num: z)) \(discretize(num: w))")
                     x /= d
                     y /= d
                     z /= d
                     w /= d
-//                    print("\(x) \(y) \(z) \(w)")
-//                    print("\(discretize(num: x)) \(discretize(num: y)) \(discretize(num: z)) \(discretize(num: w))")
-//                    if (boseRotationData.count >= 1000) {
-//                        boseRotationData.removeFirst(1)
-//                    }
-//                    boseRotationData.append((x,y,z,w))
                     let pitch = getPitch(x: x, y: y, z: z, w: w)
                     let roll = getRoll(x: x, y: y, z: z, w: w)
                     let yaw = getYaw(x: x, y: y, z: z, w: w)
