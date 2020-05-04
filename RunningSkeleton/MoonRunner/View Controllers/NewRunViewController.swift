@@ -37,18 +37,20 @@ import CoreMotion
 
 class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralManagerDelegate {
   
-  @IBOutlet weak var launchPromptStackView: UIStackView!
-  @IBOutlet weak var dataStackView: UIStackView!
+//  @IBOutlet weak var launchPromptStackView: UIStackView!
+//  @IBOutlet weak var dataStackView: UIStackView!
+  
+  @IBOutlet weak var readyLabel: UILabel!
   @IBOutlet weak var startButton: UIButton!
   @IBOutlet weak var stopButton: UIButton!
   @IBOutlet weak var distanceLabel: UILabel!
   @IBOutlet weak var timeLabel: UILabel!
   @IBOutlet weak var paceLabel: UILabel!
-  @IBOutlet weak var mapContainerView: UIView!
+//  @IBOutlet weak var mapContainerView: UIView!
   @IBOutlet weak var mapView: MKMapView!
-  @IBOutlet weak var badgeStackView: UIStackView!
-  @IBOutlet weak var badgeImageView: UIImageView!
-  @IBOutlet weak var badgeInfoLabel: UILabel!
+//  @IBOutlet weak var badgeStackView: UIStackView!
+//  @IBOutlet weak var badgeImageView: UIImageView!
+//  @IBOutlet weak var badgeInfoLabel: UILabel!
     
   
   // Pedometer
@@ -76,7 +78,7 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   private var timer: Timer?
   private var distance = Measurement(value: 0, unit: UnitLength.meters)
   private var locationList: [CLLocation] = []
-  private var upcomingBadge: Badge!
+//  private var upcomingBadge: Badge!
   private let successSound: AVAudioPlayer = {
     guard let successSound = NSDataAsset(name: "success") else {
       return AVAudioPlayer()
@@ -87,8 +89,8 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   override func viewDidLoad() {
     StaticLinker.viewController = self
     super.viewDidLoad()
-    dataStackView.isHidden = true // required to work around behavior change in Xcode 9 beta 1
-    badgeStackView.isHidden = true // required to work around behavior change in Xcode 9 beta 1
+//    dataStackView.isHidden = true // required to work around behavior change in Xcode 9 beta 1
+//    badgeStackView.isHidden = true // required to work around behavior change in Xcode 9 beta 1
     
     // Do any additional setup after loading the view.
     //stepDetector.testFFT()
@@ -128,19 +130,21 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   }
   
   private func startRun() {
-    launchPromptStackView.isHidden = true
-    dataStackView.isHidden = false
+//    launchPromptStackView.isHidden = true
+//    dataStackView.isHidden = false
     startButton.isHidden = true
     stopButton.isHidden = false
-    mapContainerView.isHidden = false
+    readyLabel.isHidden = true
+    let pedometer = CMPedometer()
+//    mapContainerView.isHidden = false
     mapView.removeOverlays(mapView.overlays)
     
     seconds = 0
     distance = Measurement(value: 0, unit: UnitLength.meters)
     locationList.removeAll()
-    badgeStackView.isHidden = false
-    upcomingBadge = Badge.next(for: 0)
-    badgeImageView.image = UIImage(named: upcomingBadge.imageName)
+//    badgeStackView.isHidden = false
+//    upcomingBadge = Badge.next(for: 0)
+//    badgeImageView.image = UIImage(named: upcomingBadge.imageName)
     updateDisplay()
     timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
       self.eachSecond()
@@ -149,19 +153,20 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   }
   
   private func stopRun() {
-    launchPromptStackView.isHidden = false
-    dataStackView.isHidden = true
+//    launchPromptStackView.isHidden = false
+//    dataStackView.isHidden = true
     startButton.isHidden = false
     stopButton.isHidden = true
-    mapContainerView.isHidden = true
-    badgeStackView.isHidden = true
+    readyLabel.isHidden = false
+//    mapContainerView.isHidden = true
+//    badgeStackView.isHidden = true
     
     locationManager.stopUpdatingLocation()
   }
   
   func eachSecond() {
     seconds += 1
-    checkNextBadge()
+//    checkNextBadge()
     updateDisplay()
   }
   
@@ -176,9 +181,9 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
     timeLabel.text = "Time:  \(formattedTime)"
     paceLabel.text = "Pace:  \(formattedPace)"
     
-    let distanceRemaining = upcomingBadge.distance - distance.value
-    let formattedDistanceRemaining = FormatDisplay.distance(distanceRemaining)
-    badgeInfoLabel.text = "\(formattedDistanceRemaining) until \(upcomingBadge.name)"
+//    let distanceRemaining = upcomingBadge.distance - distance.value
+//    let formattedDistanceRemaining = FormatDisplay.distance(distanceRemaining)
+//    badgeInfoLabel.text = "\(formattedDistanceRemaining) until \(upcomingBadge.name)"
   }
   
   private func startLocationUpdates() {
@@ -207,15 +212,15 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
     run = newRun
   }
   
-  private func checkNextBadge() {
-    let nextBadge = Badge.next(for: distance.value)
-    if upcomingBadge != nextBadge {
-      badgeImageView.image = UIImage(named: nextBadge.imageName)
-      upcomingBadge = nextBadge
-      successSound.play()
-      AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-    }
-  }
+//  private func checkNextBadge() {
+//    let nextBadge = Badge.next(for: distance.value)
+//    if upcomingBadge != nextBadge {
+//      badgeImageView.image = UIImage(named: nextBadge.imageName)
+//      upcomingBadge = nextBadge
+//      successSound.play()
+//      AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+//    }
+//  }
   
   // -----Bose Code-----
   func turnOnSensors(using sensorConfigurationCharacteristic: CBCharacteristic?) {

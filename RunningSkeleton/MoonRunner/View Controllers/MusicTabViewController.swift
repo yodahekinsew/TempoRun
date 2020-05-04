@@ -29,9 +29,16 @@
  */
 
 import UIKit
+import CoreMotion
 
 class MusicTabViewController: UIViewController {
 
+  // Pedometer
+  private let pedometer = CMPedometer()
+  var cadence = 0;
+
+  
+  
   @IBOutlet var trackName: UILabel!
   @IBOutlet var artistName: UILabel!
   @IBOutlet var contextName: UILabel!
@@ -43,6 +50,9 @@ class MusicTabViewController: UIViewController {
   private var BPMTable = Dictionary<String, Double>()
   override func viewDidLoad() {
     super.viewDidLoad()
+    if (cadence == 0 && StaticLinker.viewController != nil){
+      cadence = StaticLinker.viewController?.cadence as! Int
+    }
     if appRemote?.isConnected == true {
       appRemoteConnected()
     }
@@ -134,11 +144,13 @@ class MusicTabViewController: UIViewController {
   // TODO: to implement
   @IBAction func SetBPM(_ sender: Any) {
     let testBPM = 120
-    if(StaticLinker.viewController!.cadence) > 0{
-      let testBPM = Double(StaticLinker.viewController!.cadence*60)
+    if (cadence == 0 && StaticLinker.viewController != nil){
+      cadence = StaticLinker.viewController!.cadence*60
+    }
+    if(cadence) > 0{
+      let testBPM = Double(cadence*60)
     }
     let threshold = 5.0
-    print(StaticLinker.viewController!.cadence*60);
     print("Set BPM Pressed!");
     //print(BPMTable)
     // queue songs with matching BPM
@@ -227,6 +239,28 @@ class MusicTabViewController: UIViewController {
       
     task.resume()
     }
+  //Pedometer code starts
+
+  private func startCountingSteps() {
+    pedometer.startUpdates(from: Date()) {
+        [weak self] pedometerData, error in
+        guard let pedometerData = pedometerData, error == nil else { return }
+
+        DispatchQueue.main.async {
+          self?.cadence = pedometerData.currentCadence?.intValue ?? 0
+
+        }
+
+    }
+  }
+
+
+  private func startUpdating() {
+    if CMPedometer.isStepCountingAvailable() {
+        startCountingSteps()
+    }
+  }
+  
 }
  
 extension MusicTabViewController: SPTAppRemotePlayerStateDelegate {
