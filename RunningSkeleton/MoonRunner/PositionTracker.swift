@@ -21,6 +21,8 @@ class PositionTracker: NSObject, CLLocationManagerDelegate {
     var locationManager: CLLocationManager? = nil
     
     private var currentVelocity: (x: Float, y: Float, z: Float) = (0,0,0)
+  
+    public var speedState = "constant"
     
     func setupLocationManager() {
         self.locationManager = CLLocationManager()
@@ -48,11 +50,21 @@ class PositionTracker: NSObject, CLLocationManagerDelegate {
     }
     
     func updateWithIMU(acceleration currentAcceleration: (x: Float, y: Float, z: Float), heading currentHeading: (pitch: Float, roll: Float, yaw: Float)) {
+        let previousCurrentVelocity = currentVelocity
         currentVelocity = (
-            x: currentVelocity.x + 9.8*(currentAcceleration.x - sinf(Float.pi-currentHeading.pitch))*0.02,
-            y: currentVelocity.y + 9.8*currentAcceleration.y*0.02,
-            z: currentVelocity.z + 9.8*currentAcceleration.z*0.02
+          x: currentVelocity.x + 9.8*(currentAcceleration.x - sinf(Float.pi-currentHeading.pitch))*0.02,
+          y: currentVelocity.y + 9.8*currentAcceleration.y*0.02,
+          z: currentVelocity.z + 9.8*currentAcceleration.z*0.02
         )
+        if (currentVelocity.x > previousCurrentVelocity.x + 0.2
+          || currentVelocity.y > previousCurrentVelocity.y + 0.2) {
+          speedState = "increasing";
+        } else if (currentVelocity.x < previousCurrentVelocity.x - 0.2
+          || currentVelocity.y < previousCurrentVelocity.y - 0.2) {
+          speedState = "decreasing";
+        } else {
+          speedState = "constant";
+        }
         let deltaPosition = currentVelocity.x*0.02
         let deltaY = deltaPosition*cosf(currentHeading.yaw)
         let deltaX = deltaPosition*sinf(currentHeading.yaw)
