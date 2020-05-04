@@ -48,8 +48,9 @@ class MusicTabViewController: UIViewController {
   
   private var subscribedToPlayerState: Bool = false
   private var playerState: SPTAppRemotePlayerState?
-  private var currentContext = URL(string:"")
+  private var currentContext : URL? = nil
   private var BPMTable = Dictionary<String, Double>()
+  private var item : SPTAppRemoteContentItem?
   override func viewDidLoad() {
     super.viewDidLoad()
     if (cadence == 0 && StaticLinker.viewController != nil){
@@ -83,9 +84,11 @@ class MusicTabViewController: UIViewController {
     trackName.text = playerState.track.name
     artistName.text = playerState.track.artist.name
     contextName.text = playerState.contextTitle
-    if (playerState.contextURI != currentContext) {
-      print("new context")
+    // if (playerState.contextURI != currentContext) {
+    if (currentContext == nil ) {
+      print("new context: ", playerState.contextURI)
       self.BPMTable = Dictionary<String, Double>()
+      
       makeBPMTable(context: playerState.contextURI)
       currentContext = playerState.contextURI
     }
@@ -159,6 +162,7 @@ class MusicTabViewController: UIViewController {
     print(testBPM)
     print(BPMTable)
     // queue songs with matching BPM
+    var nextSongs = Array<String>()
     for (song, tempo) in BPMTable {
       if abs(tempo - Double(testBPM)) < threshold {
         print("queuing this song: ", song, "with BPM of ", tempo)
@@ -166,12 +170,27 @@ class MusicTabViewController: UIViewController {
         BPMStepper.value = Double(testBPM)
         print("song found!")
         print(song)
-        appRemote?.playerAPI?.enqueueTrackUri(song, callback: defaultCallback)
+        nextSongs.append(song)
       }
     }
-    
-    appRemote?.playerAPI?.skip(toNext: defaultCallback)
+    //print(nextSongs)
+    print("adding " + nextSongs[0] + " to the queue")
+    enqueueArray(songs: nextSongs, index: 0)
+  }
   
+  private func enqueueArray(songs: [String], index : Int ) {
+    appRemote?.playerAPI?.enqueueTrackUri(songs[index], callback: {(result, error) -> Void in
+      if error == nil {
+        if index != songs.count - 1 {
+        print("adding " + songs[index] + " to the queue")
+        self.enqueueArray(songs: songs, index: index + 1)
+        } else {
+          self.appRemote?.playerAPI?.skip(toNext: self.defaultCallback)
+        }
+      } else {
+        print(error)
+      }
+    })
   }
   
   @IBAction func BPMStep(_ sender: Any) {
@@ -181,19 +200,18 @@ class MusicTabViewController: UIViewController {
     BPMStepper.value = Double(testBPM)
     print("Change BPM Pressed!");
     print(testBPM)
-    //print(BPMTable)
     // queue songs with matching BPM
+    var nextSongs = [String]()
     for (song, tempo) in BPMTable {
       if abs(tempo - Double(testBPM)) < threshold {
         print("queuing this song: ", song, "with BPM of ", tempo)
         BPMLabel.text = String(testBPM)
         BPMStepper.value = Double(testBPM)
-        appRemote?.playerAPI?.enqueueTrackUri(song, callback: defaultCallback)
+        nextSongs.append(song)
       }
     }
-    
-    appRemote?.playerAPI?.skip(toNext: defaultCallback)
-  
+    print("adding " + nextSongs[0] + " to the queue")
+    enqueueArray(songs: nextSongs, index: 0)
   }
   
   
@@ -220,6 +238,7 @@ class MusicTabViewController: UIViewController {
  
     appRemote?.contentAPI?.fetchContentItem(forURI: context.absoluteString, callback: {  (result, error) -> Void in
       if let _ = result {
+        // self.item = result as! SPTAppRemoteContentItem
         self.appRemote?.contentAPI?.fetchChildren(of: result as! SPTAppRemoteContentItem, callback: { (children, error) -> Void in
           var songs = children as! [SPTAppRemoteContentItem]
           for song in songs {
