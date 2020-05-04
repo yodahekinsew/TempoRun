@@ -70,5 +70,7 @@ class PositionTracker: NSObject, CLLocationManagerDelegate {
         let deltaX = deltaPosition*sinf(currentHeading.yaw)
         let deltaLongitude = deltaY/111111
         let deltaLatitude = deltaX/(111111*cosf(Float(currentGPSPosition!.longitude)))
+        currentGPSPosition!.longitude = Double(deltaLongitude)
+        currentGPSPosition!.latitude = Double(deltaLatitude)
     }
 }
