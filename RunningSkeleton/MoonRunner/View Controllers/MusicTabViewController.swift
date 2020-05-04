@@ -36,7 +36,9 @@ class MusicTabViewController: UIViewController {
   // Pedometer
   private let pedometer = CMPedometer()
   var cadence = 0;
-
+  @IBOutlet weak var BPMLabel: UILabel!
+  @IBOutlet weak var BPMStepper: UIStepper!
+  
   
   
   @IBOutlet var trackName: UILabel!
@@ -150,13 +152,20 @@ class MusicTabViewController: UIViewController {
     if(cadence) > 0{
       let testBPM = Double(cadence*60)
     }
+    BPMLabel.text = String(testBPM)
+    BPMStepper.value = Double(testBPM)
     let threshold = 5.0
     print("Set BPM Pressed!");
-    //print(BPMTable)
+    print(testBPM)
+    print(BPMTable)
     // queue songs with matching BPM
     for (song, tempo) in BPMTable {
       if abs(tempo - Double(testBPM)) < threshold {
         print("queuing this song: ", song, "with BPM of ", tempo)
+        BPMLabel.text = String(tempo)
+        BPMStepper.value = Double(testBPM)
+        print("song found!")
+        print(song)
         appRemote?.playerAPI?.enqueueTrackUri(song, callback: defaultCallback)
       }
     }
@@ -164,6 +173,29 @@ class MusicTabViewController: UIViewController {
     appRemote?.playerAPI?.skip(toNext: defaultCallback)
   
   }
+  
+  @IBAction func BPMStep(_ sender: Any) {
+    let testBPM = BPMStepper.value
+    let threshold = 5.0
+    BPMLabel.text = String(testBPM)
+    BPMStepper.value = Double(testBPM)
+    print("Change BPM Pressed!");
+    print(testBPM)
+    //print(BPMTable)
+    // queue songs with matching BPM
+    for (song, tempo) in BPMTable {
+      if abs(tempo - Double(testBPM)) < threshold {
+        print("queuing this song: ", song, "with BPM of ", tempo)
+        BPMLabel.text = String(testBPM)
+        BPMStepper.value = Double(testBPM)
+        appRemote?.playerAPI?.enqueueTrackUri(song, callback: defaultCallback)
+      }
+    }
+    
+    appRemote?.playerAPI?.skip(toNext: defaultCallback)
+  
+  }
+  
   
   // slowly transition to new artwork
   private func updateAlbumArtWithImage(_ image: UIImage) {

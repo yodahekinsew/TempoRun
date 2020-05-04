@@ -398,7 +398,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ga-e2-HJL">
-                                <rect key="frame" x="322" y="504" width="72" height="30"/>
+                                <rect key="frame" x="322" y="503.66666666666674" width="72" height="31"/>
                                 <state key="normal" title="Next Song"/>
                                 <connections>
                                     <action selector="NextSong:" destination="Fl7-Lb-yn8" eventType="touchUpInside" id="w7p-x5-Q9f"/>
@@ -418,29 +418,29 @@
                                     <constraint firstAttribute="height" constant="300" id="gGq-5W-oYZ"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aH1-C2-9h6">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aH1-C2-9h6">
                                 <rect key="frame" x="186" y="504" width="42" height="30"/>
                                 <state key="normal" title="pause"/>
                                 <connections>
                                     <action selector="Button:" destination="Fl7-Lb-yn8" eventType="touchUpInside" id="LKS-yv-CHd"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hwj-he-iYk">
-                                <rect key="frame" x="181.33333333333334" y="675.33333333333337" width="51.666666666666657" height="26.333333333333371"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Track" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hwj-he-iYk">
+                                <rect key="frame" x="181.33333333333334" y="675.33333333333326" width="51.666666666666657" height="26.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6yJ-U7-9s6">
-                                <rect key="frame" x="107" y="560" width="200" height="84"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6yJ-U7-9s6">
+                                <rect key="frame" x="0.0" y="572" width="121" height="57"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Set BPM"/>
                                 <connections>
                                     <action selector="SetBPM:" destination="Fl7-Lb-yn8" eventType="touchUpInside" id="VqV-et-Eza"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8t8-y3-xKk">
-                                <rect key="frame" x="181.33333333333334" y="721.66666666666663" width="51.333333333333343" height="26.333333333333371"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8t8-y3-xKk">
+                                <rect key="frame" x="181.33333333333334" y="721.66666666666652" width="51.333333333333343" height="26.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -472,36 +472,59 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="v4g-Ex-fOX"/>
                                 </connections>
                             </button>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="300" stepValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="w6u-uo-G4U">
+                                <rect key="frame" x="160" y="584.66666666666663" width="94" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="BPMStep:" destination="Fl7-Lb-yn8" eventType="valueChanged" id="XHP-sz-1SK"/>
+                                </connections>
+                            </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhn-yw-h0P">
+                                <rect key="frame" x="316" y="576.66666666666663" width="78" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
                             <constraint firstItem="Hwj-he-iYk" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="04B-MG-0cs"/>
+                            <constraint firstItem="6yJ-U7-9s6" firstAttribute="leading" secondItem="7HL-FV-Fud" secondAttribute="leading" id="1TR-Sf-dMg"/>
                             <constraint firstItem="3lA-1b-5y0" firstAttribute="top" secondItem="8t8-y3-xKk" secondAttribute="bottom" constant="60" id="1Z3-ee-Kh3"/>
                             <constraint firstItem="RBb-Tz-DPV" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" constant="-121" id="3Kq-x8-AHr"/>
                             <constraint firstItem="Fjk-Ws-jfs" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" constant="-130" id="7FL-9P-CRH"/>
-                            <constraint firstItem="6yJ-U7-9s6" firstAttribute="leading" secondItem="7HL-FV-Fud" secondAttribute="leadingMargin" constant="87" id="937-KO-eH7"/>
+                            <constraint firstItem="6yJ-U7-9s6" firstAttribute="centerY" secondItem="w6u-uo-G4U" secondAttribute="centerY" id="9C6-4F-UZY"/>
                             <constraint firstItem="9Ga-e2-HJL" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" constant="151" id="9PJ-jE-2GR"/>
+                            <constraint firstItem="w6u-uo-G4U" firstAttribute="bottom" secondItem="lhn-yw-h0P" secondAttribute="bottom" id="EQk-T3-HIz"/>
+                            <constraint firstItem="lhn-yw-h0P" firstAttribute="trailing" secondItem="9Ga-e2-HJL" secondAttribute="trailing" id="IDx-3T-Y8u"/>
+                            <constraint firstItem="3lA-1b-5y0" firstAttribute="top" secondItem="6yJ-U7-9s6" secondAttribute="bottom" constant="179" id="IWm-ay-h6f"/>
                             <constraint firstItem="aH1-C2-9h6" firstAttribute="centerX" secondItem="RBb-Tz-DPV" secondAttribute="centerX" id="JZl-P4-lNc"/>
+                            <constraint firstItem="w6u-uo-G4U" firstAttribute="top" secondItem="aH1-C2-9h6" secondAttribute="bottom" constant="50" id="LJE-ar-b8P"/>
                             <constraint firstItem="8t8-y3-xKk" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="LzD-or-XMZ"/>
+                            <constraint firstItem="lhn-yw-h0P" firstAttribute="top" secondItem="9Ga-e2-HJL" secondAttribute="bottom" constant="42" id="MN8-Nn-uJz"/>
                             <constraint firstItem="9Ga-e2-HJL" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" constant="98" id="UEU-ve-kys"/>
                             <constraint firstItem="aH1-C2-9h6" firstAttribute="baseline" secondItem="Fjk-Ws-jfs" secondAttribute="baseline" id="Wg5-zL-y1n"/>
+                            <constraint firstItem="Hwj-he-iYk" firstAttribute="top" secondItem="w6u-uo-G4U" secondAttribute="bottom" constant="59.333333333333258" id="YJR-bE-eIi"/>
                             <constraint firstItem="MmH-6F-XCr" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="Z26-xE-bDY"/>
                             <constraint firstItem="Fjk-Ws-jfs" firstAttribute="centerY" secondItem="7HL-FV-Fud" secondAttribute="centerY" constant="98" id="ZBe-t8-KA5"/>
                             <constraint firstItem="MmH-6F-XCr" firstAttribute="top" secondItem="lhv-zu-ign" secondAttribute="bottom" constant="8" id="aQU-Rd-gyq"/>
                             <constraint firstItem="RBb-Tz-DPV" firstAttribute="top" secondItem="MmH-6F-XCr" secondAttribute="bottom" constant="10" id="ap7-wY-Jjt"/>
-                            <constraint firstItem="Hwj-he-iYk" firstAttribute="top" secondItem="6yJ-U7-9s6" secondAttribute="bottom" constant="8" id="cku-Rb-Nfb"/>
+                            <constraint firstItem="w6u-uo-G4U" firstAttribute="centerX" secondItem="aH1-C2-9h6" secondAttribute="centerX" id="bni-Qz-GBI"/>
+                            <constraint firstItem="6yJ-U7-9s6" firstAttribute="top" secondItem="Fjk-Ws-jfs" secondAttribute="bottom" constant="38" id="fB1-Br-6Wb"/>
                             <constraint firstItem="3lA-1b-5y0" firstAttribute="top" secondItem="uoo-cF-Jvq" secondAttribute="bottom" constant="15" id="j1m-Mm-h8d"/>
+                            <constraint firstItem="w6u-uo-G4U" firstAttribute="leading" secondItem="6yJ-U7-9s6" secondAttribute="trailing" constant="39" id="kkn-3O-EpU"/>
                             <constraint firstItem="RBb-Tz-DPV" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="l8X-6E-8Ik"/>
                             <constraint firstItem="8t8-y3-xKk" firstAttribute="top" secondItem="Hwj-he-iYk" secondAttribute="bottom" constant="20" id="nfU-TV-8ax"/>
-                            <constraint firstItem="6yJ-U7-9s6" firstAttribute="top" secondItem="aH1-C2-9h6" secondAttribute="bottom" constant="30" id="o55-em-Vgg"/>
-                            <constraint firstItem="6yJ-U7-9s6" firstAttribute="centerX" secondItem="aH1-C2-9h6" secondAttribute="centerX" id="oEE-g3-I8G"/>
                             <constraint firstItem="lhv-zu-ign" firstAttribute="centerX" secondItem="7HL-FV-Fud" secondAttribute="centerX" id="pPB-ix-PMg"/>
                             <constraint firstItem="uoo-cF-Jvq" firstAttribute="trailing" secondItem="9Ga-e2-HJL" secondAttribute="trailing" id="qLL-Ji-NwK"/>
+                            <constraint firstItem="lhn-yw-h0P" firstAttribute="leading" secondItem="w6u-uo-G4U" secondAttribute="trailing" constant="62" id="wkL-BI-c0g"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Music" image="music.note" catalog="system" id="zYD-J6-ZQo"/>
                     <navigationItem key="navigationItem" id="r4E-Oj-rsO"/>
                     <connections>
+                        <outlet property="BPMLabel" destination="lhn-yw-h0P" id="Nwr-QN-dIB"/>
+                        <outlet property="BPMStepper" destination="w6u-uo-G4U" id="M5O-mC-E9W"/>
                         <outlet property="albumArtImageView" destination="RBb-Tz-DPV" id="EQd-fA-buG"/>
                         <outlet property="artistName" destination="8t8-y3-xKk" id="LEK-tL-PUb"/>
                         <outlet property="contextName" destination="MmH-6F-XCr" id="Ab9-5B-BQC"/>
