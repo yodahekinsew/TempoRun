@@ -37,6 +37,12 @@
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>TempRun uses Bluetooth</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>TempoRun uses Location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>TempoRun uses Location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>TempoRun uses the Microphone</string>
 	<key>NSMotionUsageDescription</key>
 	<string>TempRun uses this</string>
 	<key>UIApplicationSceneManifest</key>
@@ -58,6 +64,12 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+		<string>processing</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -18,8 +18,8 @@
 		CE94530B2447A0510014665E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE9453092447A0510014665E /* LaunchScreen.storyboard */; };
 		CE9453162447A0510014665E /* TempoRunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9453152447A0510014665E /* TempoRunTests.swift */; };
 		CE9453212447A0510014665E /* TempoRunUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9453202447A0510014665E /* TempoRunUITests.swift */; };
-		CE9453312447A5B30014665E /* BoseQC35Peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9453302447A5B30014665E /* BoseQC35Peripheral.swift */; };
 		CE9453332447A5F90014665E /* BoseFramesPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9453322447A5F90014665E /* BoseFramesPeripheral.swift */; };
+		CEC11C92245E65C700CBDDE8 /* PositionTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC11C91245E65C700CBDDE8 /* PositionTracker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +58,8 @@
 		CE94531C2447A0510014665E /* TempoRunUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TempoRunUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9453202447A0510014665E /* TempoRunUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoRunUITests.swift; sourceTree = "<group>"; };
 		CE9453222447A0510014665E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE9453302447A5B30014665E /* BoseQC35Peripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoseQC35Peripheral.swift; sourceTree = "<group>"; };
 		CE9453322447A5F90014665E /* BoseFramesPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoseFramesPeripheral.swift; sourceTree = "<group>"; };
+		CEC11C91245E65C700CBDDE8 /* PositionTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionTracker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,9 +125,9 @@
 				CE9453002447A04F0014665E /* SceneDelegate.swift */,
 				CE9453022447A04F0014665E /* ViewController.swift */,
 				CE54B4642454F2570065B9E6 /* Logger.swift */,
-				CE9453302447A5B30014665E /* BoseQC35Peripheral.swift */,
 				CE9453322447A5F90014665E /* BoseFramesPeripheral.swift */,
 				CE54B4622454E3DD0065B9E6 /* StepDetector.swift */,
+				CEC11C91245E65C700CBDDE8 /* PositionTracker.swift */,
 				CE9453042447A04F0014665E /* Main.storyboard */,
 				CE9453072447A0510014665E /* Assets.xcassets */,
 				CE9453092447A0510014665E /* LaunchScreen.storyboard */,
@@ -285,9 +285,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC11C92245E65C700CBDDE8 /* PositionTracker.swift in Sources */,
 				CE9453332447A5F90014665E /* BoseFramesPeripheral.swift in Sources */,
 				CE9453032447A04F0014665E /* ViewController.swift in Sources */,
-				CE9453312447A5B30014665E /* BoseQC35Peripheral.swift in Sources */,
 				CE54B4632454E3DD0065B9E6 /* StepDetector.swift in Sources */,
 				CE54B4652454F2570065B9E6 /* Logger.swift in Sources */,
 				CE9452FF2447A04F0014665E /* AppDelegate.swift in Sources */,
