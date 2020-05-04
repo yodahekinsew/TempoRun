@@ -54,7 +54,7 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   // Pedometer
   private let activityManager = CMMotionActivityManager()
   private let pedometer = CMPedometer()
-  private var cadence = 0;
+  var cadence = 0;
   @IBOutlet weak var activityTypeLabel: UILabel!
   @IBOutlet weak var stepsCountLabel: UILabel!
   @IBOutlet weak var BPMLabel: UILabel!
@@ -85,6 +85,7 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   }()
 
   override func viewDidLoad() {
+    StaticLinker.viewController = self
     super.viewDidLoad()
     dataStackView.isHidden = true // required to work around behavior change in Xcode 9 beta 1
     badgeStackView.isHidden = true // required to work around behavior change in Xcode 9 beta 1
@@ -106,6 +107,7 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   @IBAction func startTapped() {
     startRun()
   }
+
   
   @IBAction func stopTapped() {
     let alertController = UIAlertController(title: "End run?",
@@ -462,4 +464,8 @@ extension NewRunViewController: MKMapViewDelegate {
     renderer.lineWidth = 3
     return renderer
   }
+}
+class StaticLinker
+{
+     static var viewController : NewRunViewController? = nil
 }

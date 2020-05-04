@@ -41,7 +41,6 @@ class MusicTabViewController: UIViewController {
   private var playerState: SPTAppRemotePlayerState?
   private var currentContext = URL(string:"")
   private var BPMTable = Dictionary<String, Double>()
-
   override func viewDidLoad() {
     super.viewDidLoad()
     if appRemote?.isConnected == true {
@@ -134,13 +133,17 @@ class MusicTabViewController: UIViewController {
   
   // TODO: to implement
   @IBAction func SetBPM(_ sender: Any) {
-    let testBPM = 100.0
+    let testBPM = 120
+    if(StaticLinker.viewController!.cadence) > 0{
+      let testBPM = Double(StaticLinker.viewController!.cadence*60)
+    }
     let threshold = 5.0
+    print(StaticLinker.viewController!.cadence*60);
     print("Set BPM Pressed!");
     //print(BPMTable)
     // queue songs with matching BPM
     for (song, tempo) in BPMTable {
-      if abs(tempo - testBPM) < threshold {
+      if abs(tempo - Double(testBPM)) < threshold {
         print("queuing this song: ", song, "with BPM of ", tempo)
         appRemote?.playerAPI?.enqueueTrackUri(song, callback: defaultCallback)
       }
@@ -232,3 +235,6 @@ extension MusicTabViewController: SPTAppRemotePlayerStateDelegate {
            updateNowPlaying(playerState)
        }
 }
+
+
+
