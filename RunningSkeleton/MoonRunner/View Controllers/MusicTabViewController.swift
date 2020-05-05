@@ -173,9 +173,10 @@ class MusicTabViewController: UIViewController {
         nextSongs.append(song)
       }
     }
-    //print(nextSongs)
-    print("adding " + nextSongs[0] + " to the queue")
-    enqueueArray(songs: nextSongs, index: 0)
+    if nextSongs.count != 0 {
+      print("adding " + nextSongs[0] + " to the queue")
+      enqueueArray(songs: nextSongs, index: 0)
+    }
   }
   
   private func enqueueArray(songs: [String], index : Int ) {
@@ -210,8 +211,11 @@ class MusicTabViewController: UIViewController {
         nextSongs.append(song)
       }
     }
-    print("adding " + nextSongs[0] + " to the queue")
-    enqueueArray(songs: nextSongs, index: 0)
+    
+    if nextSongs.count != 0 {
+      print("adding " + nextSongs[0] + " to the queue")
+      enqueueArray(songs: nextSongs, index: 0)
+    }
   }
   
   
