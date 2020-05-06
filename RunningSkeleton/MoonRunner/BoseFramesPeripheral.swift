@@ -34,6 +34,9 @@ class BoseFramesPeripheral: NSObject {
     public var boseGyroData: [(x: Float, y: Float, z: Float)] = []
     
     public var currentHeading: (pitch: Float, roll: Float, yaw: Float)? = nil
+  
+    public var detectedGesture: String = ""
+    public var detectedGestureTime: Date = Date()
     
     private var sensors = [
         "accelerometer",
@@ -136,7 +139,7 @@ class BoseFramesPeripheral: NSObject {
                     if (boseAccelerationData.count >= 1000) {
                         boseAccelerationData.removeFirst(1)
                     }
-                    if (xAccelOverTime.count > 10) {
+                    if (xAccelOverTime.count > 500) {
                         xAccelOverTime.removeFirst(1)
                         yAccelOverTime.removeFirst(1)
                         zAccelOverTime.removeFirst(1)
@@ -259,6 +262,8 @@ class BoseFramesPeripheral: NSObject {
         if let value = gestureDataCharacteristic.value {
             let gestureID = UInt8(value[offset])
             let timestamp = UInt16(value[offset+1]) << 8 | UInt16(value[offset+2])
+            detectedGesture = gestures[Int(gestureID)-128]
+            detectedGestureTime = Date()
             print("Gesture Data Entry: \(gestureID), \(timestamp)")
         }
         return Data()

@@ -45,7 +45,7 @@ class StepDetector: NSObject {
                 maxOffsetZ = frequency.offset
             }
         }
-        if (bpmOverTimeZ.count == 10) {
+        if (bpmOverTimeZ.count == 500) {
             bpmOverTimeZ.removeFirst(1)
         }
         bpmOverTimeZ.append(Float(maxOffsetZ)*50.0/Float(frequenciesZ.count))
@@ -62,7 +62,7 @@ class StepDetector: NSObject {
                 maxOffsetY = frequency.offset
             }
         }
-        if (bpmOverTimeY.count == 10) {
+        if (bpmOverTimeY.count == 500) {
             bpmOverTimeY.removeFirst(1)
         }
         bpmOverTimeY.append(Float(maxOffsetY)*50.0/Float(frequenciesY.count))
@@ -79,7 +79,7 @@ class StepDetector: NSObject {
                 maxOffsetX = frequency.offset
             }
         }
-        if (bpmOverTimeX.count == 10) {
+        if (bpmOverTimeX.count == 500) {
             bpmOverTimeX.removeFirst(1)
         }
         bpmOverTimeX.append(Float(maxOffsetX)*50.0/Float(frequenciesX.count))
@@ -153,34 +153,4 @@ class StepDetector: NSObject {
             
         return componentFrequencies
     }
-    
-//    func fftAnalyzer(frameOfSamples: [Float]) -> [Float] {
-//        // frameOfSamples = [1.0, 2.0, 3.0, 4.0]
-//
-//        let frameCount = frameOfSamples.count
-//
-//        let reals = UnsafeMutableBufferPointer<Float>.allocate(capacity: frameCount)
-//        defer {reals.deallocate()}
-//        let imags =  UnsafeMutableBufferPointer<Float>.allocate(capacity: frameCount)
-//        defer {imags.deallocate()}
-//        _ = reals.initialize(from: frameOfSamples)
-//        imags.initialize(repeating: 0.0)
-//        var complexBuffer = DSPSplitComplex(realp: reals.baseAddress!, imagp: imags.baseAddress!)
-//
-//        let log2Size = Int(log2(Float(frameCount)))
-//        print(log2Size)
-//
-//        guard let fftSetup = vDSP_create_fftsetup(vDSP_Length(log2Size), FFTRadix(kFFTRadix2)) else {
-//            return []
-//        }
-//        defer {vDSP_destroy_fftsetup(fftSetup)}
-//
-//        // Perform a forward FFT
-//        vDSP_fft_zip(fftSetup, &complexBuffer, 1, vDSP_Length(log2Size), FFTDirection(FFT_FORWARD))
-//
-//        let realFloats = Array(reals)
-//        let imaginaryFloats = Array(imags)
-//
-//        return realFloats
-//    }
 }
