@@ -264,7 +264,7 @@ class BoseFramesPeripheral: NSObject {
             let timestamp = UInt16(value[offset+1]) << 8 | UInt16(value[offset+2])
             detectedGesture = gestures[Int(gestureID)-128]
             detectedGestureTime = Date()
-            print("Gesture Data Entry: \(gestureID), \(timestamp)")
+            print("Gesture Data Entry: \(gestureID), \(detectedGesture), \(timestamp)")
         }
         return Data()
     }
