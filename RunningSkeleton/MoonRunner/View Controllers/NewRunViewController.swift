@@ -68,7 +68,7 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   private var sensorDataCharacteristic: CBCharacteristic?
   private var sensorInformationCharacteristic: CBCharacteristic?
   private var sensorConfigurationCharacteristic: CBCharacteristic?
-  private var bosePeripheral = BoseFramesPeripheral()
+  var bosePeripheral = BoseFramesPeripheral()
   private var stepDetector = StepDetector()
   private var positionTracker = PositionTracker()
   public var runningBPM: Float = 0.0

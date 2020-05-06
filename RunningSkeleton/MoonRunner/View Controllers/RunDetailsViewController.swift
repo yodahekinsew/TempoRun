@@ -43,10 +43,27 @@ class RunDetailsViewController: UIViewController {
   
   var run: Run!
   
+  var gesture = StaticLinker.viewController!.bosePeripheral.detectedGesture{
+    didSet {
+      if ((StaticLinker.viewController!.activityTypeLabel.text == "Walking" || StaticLinker.viewController!.activityTypeLabel.text == "Stationary") && StaticLinker.viewController!.bosePeripheral.detectedGesture == "headShake"){
+        //lower volume
+      }
+    }
+  }
+  var activity = StaticLinker.viewController!.activityTypeLabel{
+    didSet {
+      if (StaticLinker.viewController!.activityTypeLabel.text == "Runnnig"){
+        //raise volume
+      }
+    }
+  }
+
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     configureView()
   }
+  
   
   @IBAction func displayModeToggled(_ sender: UISwitch) {
     UIView.animate(withDuration: 0.2) {
