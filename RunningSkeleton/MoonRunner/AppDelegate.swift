@@ -36,8 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAppRemoteDelegate {
   var window: UIWindow?
   
   // Spotify parameters
-  let SpotifyClientID = "24031a58b9d44ab193ea364e4ecd6b80"
-  
+  let SpotifyClientID = "c657481a5c484e21a70a0284b06e031d"
+  // Yoda: c657481a5c484e21a70a0284b06e031d
   // Serena: 78ec9630ae5743b4af7f9536a52bdbf1
   // Josh?: 24031a58b9d44ab193ea364e4ecd6b80
   let SpotifyRedirectURL = URL(string: "spotify-ios-quick-start://spotify-login-callback")!
