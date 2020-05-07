@@ -245,11 +245,13 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   
   func enableGestures(using gestureConfigurationCharacteristic: CBCharacteristic?) {
     var dataToWrite = Data(count: 6)
+    dataToWrite[0] = 129
+    dataToWrite[1] = 1
     dataToWrite[2] = 130
     dataToWrite[3] = 1
     dataToWrite[4] = 131
     dataToWrite[5] = 1
-    if let characteristic = sensorConfigurationCharacteristic {
+    if let characteristic = gestureConfigurationCharacteristic {
         peripheral.writeValue(dataToWrite, for: characteristic, type: .withResponse)
     }
   }
@@ -328,12 +330,12 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
                   enableSensors(using: characteristic)
               case BoseFramesPeripheral.gestureConfigurationUUID:
                   print("Found Gesture Configuration Characteristic")
+                  enableGestures(using: characteristic)
               case BoseFramesPeripheral.gestureInformationUUID:
                   print("Found Gesture Information Characteristic")
               case BoseFramesPeripheral.gestureDataUUID:
                   print("Found Gesture Data Characteristic")
                   peripheral.setNotifyValue(true, for: characteristic)
-                  enableGestures(using: characteristic)
               default:
                   print("Found Unsupported Characteristic")
               }

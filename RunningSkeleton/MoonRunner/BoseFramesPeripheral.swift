@@ -160,7 +160,7 @@ class BoseFramesPeripheral: NSObject {
                     currentAcceleration = (xAvg, yAvg, zAvg)
                     boseAccelerationData.append((xAvg,yAvg,zAvg))
                     offset += 7
-                    print("Accelerometer Data: x - \(x), y - \(y), z - \(z)")
+//                    print("Accelerometer Data: x - \(x), y - \(y), z - \(z)")
                 case 1:
                     let denominator = Float(pow(2.0, 12.0))
                     let x = Float(Int16(value[offset]) << 8 | Int16(value[offset+1]))/denominator
@@ -169,7 +169,7 @@ class BoseFramesPeripheral: NSObject {
                     let accuracy = UInt8(value[offset+6])
 //                    boseGyroData.append((x,y,z))
                     offset += 7
-                    print("Gyroscope Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(accuracy)")
+//                    print("Gyroscope Data: \(sensorID) \(timestamp) \(x) \(y) \(z) \(accuracy)")
                 case 2:
                     let denominator = Float(pow(2.0, 14.0))
                     var x = Float(Int16(value[offset]) << 8 | Int16(value[offset+1]))/denominator
@@ -187,7 +187,7 @@ class BoseFramesPeripheral: NSObject {
                     let roll = getRoll(x: x, y: y, z: z, w: w)
                     let yaw = getYaw(x: x, y: y, z: z, w: w)
                     currentHeading = (pitch, roll, yaw)
-                    print("Rotation Data: \(pitch) \(roll) \(yaw) \(accuracy)")
+//                    print("Rotation Data: \(pitch) \(roll) \(yaw) \(accuracy)")
                 case 3:
                     let denominator = Float(pow(2.0, 14.0))
                     let x = Float(Int16(value[offset]) << 8 | Int16(value[offset+1]))/denominator
@@ -288,8 +288,9 @@ class BoseFramesPeripheral: NSObject {
         if let value = gestureDataCharacteristic.value {
             let gestureID = UInt8(value[offset])
             let timestamp = UInt16(value[offset+1]) << 8 | UInt16(value[offset+2])
+            print(gestureID)
             detectedGesture = gestures[Int(gestureID)-128]
-            
+
           // check if at crossing
             if (detectedGesture == "headShake" && (StaticLinker.viewController!.activityTypeLabel.text == "Walking" ||
                 StaticLinker.viewController!.activityTypeLabel.text == "Stationary")) {
@@ -298,9 +299,9 @@ class BoseFramesPeripheral: NSObject {
                   MPVolumeView.setVolume(0.3)
                   StaticLinker.viewController!.atCrossing = true
             }
-          
+
             detectedGestureTime = Date()
-            print("Gesture Data Entry: \(gestureID), \(detectedGesture), \(timestamp)")
+            print("Gesture Data Entry: \(gestureID), \(timestamp)")
         }
         return Data()
     }
