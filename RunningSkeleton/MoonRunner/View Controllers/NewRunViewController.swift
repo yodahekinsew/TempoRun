@@ -51,13 +51,15 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
 //  @IBOutlet weak var badgeStackView: UIStackView!
 //  @IBOutlet weak var badgeImageView: UIImageView!
 //  @IBOutlet weak var badgeInfoLabel: UILabel!
-    
+  
+  public var atCrossing = false
   
   // Pedometer
   private let activityManager = CMMotionActivityManager()
-  private let pedometer = CMPedometer()
+    private let pedometer = CMPedometer()
   var cadence = 0;
   @IBOutlet weak var activityTypeLabel: UILabel!
+  
   @IBOutlet weak var stepsCountLabel: UILabel!
   @IBOutlet weak var BPMLabel: UILabel!
   
@@ -86,7 +88,7 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
     }
     return try! AVAudioPlayer(data: successSound.data)
   }()
-
+  
   override func viewDidLoad() {
     StaticLinker.viewController = self
     super.viewDidLoad()
@@ -100,6 +102,7 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
     positionTracker.startRecordingLocation()
     centralManager = CBCentralManager(delegate: self, queue: nil)
   }
+  
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
@@ -130,6 +133,8 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
     present(alertController, animated: true)
   }
   
+
+
   private func startRun() {
 //    launchPromptStackView.isHidden = true
 //    dataStackView.isHidden = false
@@ -337,7 +342,6 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
   }
   
   func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-//        printCharacteristic(using: characteristic)
       switch(characteristic.uuid) {
       case BoseFramesPeripheral.sensorDataUUID:
           var data = bosePeripheral.parseSensorData(using: characteristic)
@@ -386,12 +390,26 @@ class NewRunViewController: UIViewController, CBPeripheralDelegate, CBCentralMan
                   self?.activityTypeLabel.text = "Stationary"
               } else if activity.running {
                   self?.activityTypeLabel.text = "Running"
+                if self?.atCrossing == true {
+                  print("volume back up")
+                  self?.bosePeripheral.resetVolume()
+                  self?.atCrossing = false
+                }
               } else if activity.automotive {
                   self?.activityTypeLabel.text = "Automotive"
               }
           }
       }
     }
+  
+
+  /*
+    Hook up to a button to fake head shake data
+    @IBAction func fakeHeadShake(_ sender: Any) {
+      bosePeripheral.fakeHeadShake()
+    }
+ */
+ 
     private func startCountingSteps() {
       pedometer.startUpdates(from: Date()) {
           [weak self] pedometerData, error in
@@ -481,3 +499,4 @@ class StaticLinker
 {
      static var viewController : NewRunViewController? = nil
 }
+

@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 import CoreBluetooth
+import MediaPlayer
+import AVKit
+
 
 class BoseFramesPeripheral: NSObject {
 
@@ -35,8 +38,12 @@ class BoseFramesPeripheral: NSObject {
     
     public var currentHeading: (pitch: Float, roll: Float, yaw: Float)? = nil
   
-    public var detectedGesture: String = ""
+  public var detectedGesture: String = ""
+
     public var detectedGestureTime: Date = Date()
+  
+  private var currentVolume : Float = 0.0
+  private var audioSession = AVAudioSession.sharedInstance()
     
     private var sensors = [
         "accelerometer",
@@ -255,6 +262,25 @@ class BoseFramesPeripheral: NSObject {
         }
         return Data()
     }
+  
+  public func fakeHeadShake() {
+    detectedGesture = "headShake"
+    detectedGestureTime = Date()
+    
+    if (detectedGesture == "headShake" && (StaticLinker.viewController!.activityTypeLabel.text == "Walking" ||
+        StaticLinker.viewController!.activityTypeLabel.text == "Stationary")) {
+          print("Volume down now")
+          currentVolume = audioSession.outputVolume
+          MPVolumeView.setVolume(0.3)
+          StaticLinker.viewController!.atCrossing = true
+    }
+  }
+  
+  public func resetVolume() {
+    print(currentVolume)
+    MPVolumeView.setVolume(currentVolume)
+  }
+  
     
     func parseGestureData(using gestureDataCharacteristic: CBCharacteristic) -> Data {
         print("---- Gesture Data ----")
@@ -263,6 +289,16 @@ class BoseFramesPeripheral: NSObject {
             let gestureID = UInt8(value[offset])
             let timestamp = UInt16(value[offset+1]) << 8 | UInt16(value[offset+2])
             detectedGesture = gestures[Int(gestureID)-128]
+            
+          // check if at crossing
+            if (detectedGesture == "headShake" && (StaticLinker.viewController!.activityTypeLabel.text == "Walking" ||
+                StaticLinker.viewController!.activityTypeLabel.text == "Stationary")) {
+                  print("Volume down now")
+                  currentVolume = audioSession.outputVolume
+                  MPVolumeView.setVolume(0.3)
+                  StaticLinker.viewController!.atCrossing = true
+            }
+          
             detectedGestureTime = Date()
             print("Gesture Data Entry: \(gestureID), \(timestamp)")
         }
@@ -293,4 +329,17 @@ class BoseFramesPeripheral: NSObject {
         let cosy = 1-2*(y*y+z*z)
         return -1.0*atan2f(siny, cosy)
     }
+}
+
+
+extension MPVolumeView {
+  static func setVolume(_ volume: Float) {
+    let volumeView = MPVolumeView()
+    let slider = volumeView.subviews.first(where: { $0 is UISlider }) as? UISlider
+
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.01) {
+      slider?.value = volume
+    }
+  }
+
 }
