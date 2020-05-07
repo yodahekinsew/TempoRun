@@ -148,7 +148,7 @@ class MusicTabViewController: UIViewController {
   
   // TODO: to implement
   @IBAction func SetBPM(_ sender: Any) {
-    let testBPM = 120
+    let testBPM = 120.0
     if (cadence == 0 && StaticLinker.viewController != nil){
       cadence = StaticLinker.viewController!.cadence*60
     }
@@ -162,20 +162,9 @@ class MusicTabViewController: UIViewController {
     print(testBPM)
     print(BPMTable)
     // queue songs with matching BPM
-    var nextSongs = Array<String>()
-    for (song, tempo) in BPMTable {
-      if abs(tempo - Double(testBPM)) < threshold {
-        print("queuing this song: ", song, "with BPM of ", tempo)
-        BPMLabel.text = String(tempo)
-        BPMStepper.value = Double(testBPM)
-        print("song found!")
-        print(song)
-        nextSongs.append(song)
-      }
-    }
-    if nextSongs.count != 0 {
-      print("adding " + nextSongs[0] + " to the queue")
-      enqueueArray(songs: nextSongs, index: 0)
+    if queueSongsForBPM(BPM: testBPM, threshold: threshold) {
+      BPMLabel.text = String(testBPM)
+      BPMStepper.value = Double(testBPM)
     }
   }
   
@@ -202,19 +191,50 @@ class MusicTabViewController: UIViewController {
     print("Change BPM Pressed!");
     print(testBPM)
     // queue songs with matching BPM
-    var nextSongs = [String]()
+    if queueSongsForBPM(BPM: testBPM, threshold: threshold) {
+      BPMLabel.text = String(testBPM)
+      BPMStepper.value = Double(testBPM)
+    }
+    
+  }
+  
+  // Returns false if no songs with given BPM are found
+  func queueSongsForBPM(BPM: Double, threshold: Double) -> Bool {
+    var nextSongsURIs = [String]()
+    var nextSongsBPMs = [Double]()
+    
     for (song, tempo) in BPMTable {
-      if abs(tempo - Double(testBPM)) < threshold {
+      if abs(tempo - Double(BPM)) < threshold {
         print("queuing this song: ", song, "with BPM of ", tempo)
-        BPMLabel.text = String(testBPM)
-        BPMStepper.value = Double(testBPM)
-        nextSongs.append(song)
+        nextSongsBPMs.append(tempo)
+        nextSongsURIs.append(song)
+      }
+      
+      // check for half speed
+      else if abs(tempo/2 - Double(BPM)) < threshold {
+        print("queuing this song: ", song, "with BPM of ", tempo)
+        nextSongsBPMs.append(tempo/2)
+        nextSongsURIs.append(song)
+      }
+      
+      // check for double speed
+      else if abs(tempo*2 - Double(BPM)) < threshold {
+        print("queuing this song: ", song, "with BPM of ", tempo)
+        nextSongsBPMs.append(tempo*2)
+        nextSongsURIs.append(song)
       }
     }
     
-    if nextSongs.count != 0 {
-      print("adding " + nextSongs[0] + " to the queue")
-      enqueueArray(songs: nextSongs, index: 0)
+    if nextSongsURIs.count != 0 {
+      // sort by closest to tempo
+      var sortedSongs = nextSongsURIs.sorted(by: {nextSongsBPMs[nextSongsURIs.index(of: $0)!] < nextSongsBPMs[nextSongsURIs.index(of: $1)!]  } )
+      
+      print(sortedSongs)
+      print("adding " + sortedSongs[0] + " to the queue")
+      enqueueArray(songs: sortedSongs, index: 0)
+      return true
+    } else {
+      return false
     }
   }
   
